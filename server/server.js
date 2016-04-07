@@ -5,14 +5,12 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
-
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/../client/build/index.html'));
 });
-
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
