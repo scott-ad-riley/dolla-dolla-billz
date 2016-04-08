@@ -20,7 +20,7 @@ var server = app.listen(3000, function () {
   console.log('Example app listening at http://%s:%s', host, port);
 });
 
-app.get('/portfoliojson', function(req, res) {
+app.get('/api/portfolio', function(req, res) {
   MongoClient.connect(url, function(err, db) {
     if(err) {
       console.log(err);
@@ -35,7 +35,7 @@ app.get('/portfoliojson', function(req, res) {
 });
 
 
-app.post('/portfoliojson', function(req, res) {
+app.post('/api/portfolio', function(req, res) {
   console.log('body', req.body);
     MongoClient.connect(url, function(err, db) {
       if(err) {
