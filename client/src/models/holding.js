@@ -9,7 +9,7 @@ var Holding = function (info) {
 }
 
 Holding.prototype.value = function () {
-  return this.price * this.quantity
+  return this.price * this.quantity;
 }
 
 module.exports = Holding;

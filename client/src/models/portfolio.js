@@ -21,4 +21,10 @@ var Portfolio = function(url){
   }
 }
 
+Portfolio.prototype.value = function () {
+  return this.holdings.reduce(function (mem, holding) {
+    return mem + holding.value();
+  }, 0)
+}
+
 module.exports = Portfolio;
