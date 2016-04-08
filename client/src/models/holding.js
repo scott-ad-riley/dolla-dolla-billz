@@ -8,4 +8,8 @@ var Holding = function (info) {
   this.buyDate = info.buyDate;
 }
 
+Holding.prototype.value = function () {
+  return this.price * this.quantity
+}
+
 module.exports = Holding;
