@@ -1,7 +1,7 @@
 var Portfolio = function(url){
   this.url = url;
   this.holdings = [];
-  this.fetch = function(holdingConstructor){
+  this.fetch = function(holdingConstructor, callback){
     var request = new XMLHttpRequest();
     request.open("GET", this.url);
 
@@ -13,7 +13,7 @@ var Portfolio = function(url){
           var holdingObject = new holdingConstructor(holdingData);
           this.holdings.push(holdingObject);
         }.bind(this))
-        console.log(this.holdings)
+        if (callback) callback(this.holdings);
       }
     }.bind(this)
     request.send();
