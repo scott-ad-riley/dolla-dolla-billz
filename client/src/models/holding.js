@@ -6,7 +6,7 @@ var Holding = function (info) {
   this.price = info.price;
   this.quantity = info.quantity;
   this.buyDate = info.buyDate;
-}
+};
 
 Holding.prototype.value = function () {
   return this.price * this.quantity;

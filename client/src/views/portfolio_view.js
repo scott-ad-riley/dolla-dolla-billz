@@ -21,6 +21,7 @@ var PortfolioView = function (portfolioObj, headings) {
   this.render = function () {
     var tableEl = document.createElement("table");
     tableEl.id = "portfolio-table"
+    tableEl.classList.add('pure-u-12-24');
     tableEl.appendChild(this.renderHeader());
 
     this.data.forEach(function (holding) {
