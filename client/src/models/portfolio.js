@@ -24,7 +24,17 @@ var Portfolio = function(url){
 Portfolio.prototype.value = function () {
   return this.holdings.reduce(function (mem, holding) {
     return mem + holding.value();
-  }, 0)
+  }, 0);
+}
+
+Portfolio.prototype.change = function (distance) {
+  // (Price Sold - Previous Price)/(Previous Price)
+  var distance = distance || 0;
+  var previousValue = this.holdings.reduce(function (mem, holding) {
+    return mem + (holding.pastCloseOfDayPrices[(holding.pastCloseOfDayPrices.length - (distance + 1))] * holding.quantity)
+  }, 0);
+  var difference = this.value() - previousValue;
+  return ((difference / previousValue) * 100).toFixed(1);
 }
 
 module.exports = Portfolio;
