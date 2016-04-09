@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "chai": "^3.5.0",
+    "highcharts": "^4.2.3",
     "lodash": "^4.8.2",
     "mocha": "^2.4.5",
     "webpack": "^1.12.14"
