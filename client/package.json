@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "camelcase": "^2.1.1",
     "chai": "^3.5.0",
     "lodash": "^4.8.2",
     "mocha": "^2.4.5",
