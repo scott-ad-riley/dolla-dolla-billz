@@ -28,5 +28,5 @@ window.onload = function() {
 
 var displayView = function (holdingsArray) {
   var portfolioView = new PortfolioView(holdingsArray);
-  document.body.appendChild(portfolioView.render());
+  document.getElementsByClassName('pure-g')[0].appendChild(portfolioView.render());
 };
