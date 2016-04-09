@@ -21,4 +21,12 @@ describe("A Holding", function () {
   it("should calculate it's percent change over last value", function () {
     assert.equal(9.1, holding.change())
   })
+
+  it("should calculate it's percent change over second last value", function () {
+    assert.equal(22.4, holding.change(2))
+  })
+
+  it("should calculate it's percent change over third last value", function () {
+    assert.equal(11.1, holding.change(3))
+  })
 })
