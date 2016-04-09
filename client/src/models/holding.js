@@ -13,10 +13,10 @@ Holding.prototype.value = function () {
 }
 
 Holding.prototype.change = function (distance) {
-    var distance = distance || 1;
-    var previousPrice = this.pastCloseOfDayPrices[(this.pastCloseOfDayPrices.length - (distance))]
-    var difference = this.price - previousPrice;
-    return ((difference / previousPrice) * 100).toFixed(1);
+  var distance = distance || 1;
+  var previousPrice = this.pastCloseOfDayPrices[(this.pastCloseOfDayPrices.length - (distance))]
+  var difference = this.price - previousPrice;
+  return ((difference / previousPrice) * 100).toFixed(1) * -1;
 }
 
 module.exports = Holding;
