@@ -1,5 +1,9 @@
-var Router = function (app, routePrefixer) {
-  this.routes = app;
+var Router = function () {
+  this.routes = [];
+}
+
+Router.prototype.route = function (route) {
+  this.routes.push(route);
 }
 
 Router.prototype.routeWithPath = function (path) {

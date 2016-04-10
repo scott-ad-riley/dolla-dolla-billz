@@ -8,6 +8,52 @@ var PieChart = require('./views/charts/portfolio_pie_chart.js');
 var Router = require('./utils/router.js');
 var Navigation = require('./views/navigation.js');
 
+var router = new Router();
+router.route({
+  path: "/portfolio",
+  heading: "My Portfolio",
+  dataPath: "/api/portfolio",
+  defaultRoute: true,
+  onLoad: function (data, refreshCache) {
+    var userPortfolio = new Portfolio(data, Holding);
+    var container = gid('container');
+    container.innerHTML = "";
+    var lineGraphBox = ce('div');
+    lineGraphBox.classList.add("pure-u-12-24");
+    container.appendChild(lineGraphBox);
+    var lineGraph = new LineChart(lineGraphBox, userPortfolio.holdings);
+    var portfolioView = new PortfolioView(userPortfolio.holdings);
+    var tableBox = ce('div');
+    tableBox.classList.add("pure-u-12-24");
+    tableBox.appendChild(portfolioView.render());
+    container.appendChild(tableBox);
+  }
+})
+
+router.route({
+  path: "/market",
+  heading: "The Market",
+  onLoad: function () {
+    container.innerHTML = "This is the market page";
+  }
+})
+
+router.route({
+  path: "/about",
+  heading: "About Us",
+  onLoad: function () {
+    container.innerHTML = "This is the about page";
+  }
+})
+
+router.route({
+  path: "/queries",
+  heading: "Queries",
+  onLoad: function () {
+    container.innerHTML = "This is the queries page";
+  }
+})
+
 var routes = [
   {
     path: "/portfolio",
@@ -53,7 +99,6 @@ var routes = [
 ]
 
 window.onload = function() {
-  var router = new Router(routes);
   var navigation = new Navigation(routes);
   var header = gid('header');
   navigation.onLinkClicked = function (path, event) {
