@@ -1,11 +1,12 @@
-var Portfolio = function(url){
+var Portfolio = function(url, data, holdingConstructor){
   this.url = url;
-  this.holdings = [];
+  this.holdings = data.map(function (holding) {
+    return new holdingConstructor(holding);
+  }) || [];
   this.onUpdate = [];
   this.fetch = function(holdingConstructor){
     var request = new XMLHttpRequest();
     request.open("GET", this.url);
-
     request.onload = function(){
       if(request.status === 200){
         var jsonString = request.responseText;

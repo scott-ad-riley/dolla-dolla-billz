@@ -1,28 +1,60 @@
+require('short-dom')();
 var Portfolio = require('./models/portfolio.js');
 var Holding = require('./models/holding.js');
 var PortfolioView = require('./views/portfolio_view.js');
 var HoldingView = require('./views/holding_view.js');
 var LineChart = require('./views/charts/portfolio_line_chart.js');
 var PieChart = require('./views/charts/portfolio_pie_chart.js');
+var Router = require('./utils/router.js');
 
+var routes = [
+  {
+    path: "/portfolio",
+    onload: function (data) {
+      var userPortfolio = new Portfolio(null, data, Holding);
+      console.log(userPortfolio)
+      var container = gid('container');
+      var lineGraphBox = ce('div');
+      lineGraphBox.class = "pure-u-12-24";
+      container.appendChild(lineGraphBox);
+      var lineGraph = new LineChart(lineGraphBox, userPortfolio.holdings);
+      var portfolioView = new PortfolioView(userPortfolio.holdings);
+      var tableBox = ce('div');
+      tableBox.class = "pure-u-12-24";
+      tableBox.appendChild(portfolioView.render());
+      container.appendChild(tableBox);
+    }
+  },
+  {
+    path: "/market"
+  },
+  {
+    path: "/about"
+  },
+  {
+    path: "/queries"
+  }
+]
 
 window.onload = function() {
-  var url = '/api/portfolio';
-  var userPortfolio = new Portfolio(url);
-  userPortfolio.addUpdateCallback(displayView);
+  var router = new Router(routes);
+  router.loadPage(window.location.pathname) // might become loadInitial which does replaceState instead of pushState
+  // var url = '/api/portfolio';
+  // var userPortfolio = new Portfolio(url);
+  // userPortfolio.addUpdateCallback(displayView);
 
-  var lineGraph = document.getElementById('line-graph');
-  var createChart = function(holdings) {
-    new LineChart(lineGraph, holdings);
-  };
-  userPortfolio.addUpdateCallback(createChart);
+  // var lineGraph = document.getElementById('line-graph');
+  // var createChart = function(holdings) {
+  //   new LineChart(lineGraph, holdings);
+  // };
+  // userPortfolio.addUpdateCallback(createChart);
 
-  var pieChart = document.getElementById('pie-chart');
-  var createPieChart = function(holdings){
-    new PieChart(pieChart, holdings);
-  };
-    userPortfolio.addUpdateCallback(createPieChart);
-    userPortfolio.fetch(Holding);
+  // var pieChart = document.getElementById('pie-chart');
+  // var createPieChart = function(holdings){
+  //   new PieChart(pieChart, holdings);
+  // };
+  //   userPortfolio.addUpdateCallback(createPieChart);
+  //   userPortfolio.fetch(Holding);
 
 };
 
