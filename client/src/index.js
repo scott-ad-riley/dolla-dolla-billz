@@ -45,8 +45,14 @@ window.onload = function() {
   var router = new Router(routes);
   var navigation = new Navigation(routes);
   var header = gid('header');
+  navigation.onLinkClicked = function (path, event) {
+    console.log(arguments);
+    alert("something")
+    event.preventDefault();
+    router.loadNewPage(path);
+  }
   header.appendChild(navigation.render());
-  router.loadPage(window.location.pathname) // might become loadInitial which does replaceState instead of pushState
+  router.loadInitialPage(window.location.pathname) // might become loadInitial which does replaceState instead of pushState
   // var url = '/api/portfolio';
   // var userPortfolio = new Portfolio(url);
   // userPortfolio.addUpdateCallback(displayView);
