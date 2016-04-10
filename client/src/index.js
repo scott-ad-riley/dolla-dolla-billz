@@ -13,9 +13,9 @@ var routes = [
     path: "/portfolio",
     heading: "My Portfolio",
     dataPath: "/api/portfolio",
-    onLoad: function (data) {
-      var userPortfolio = new Portfolio(null, data, Holding);
-      console.log(userPortfolio)
+    defaultRoute: true,
+    onLoad: function (data, refreshCache) {
+      var userPortfolio = new Portfolio(data, Holding);
       var container = gid('container');
       container.innerHTML = "";
       var lineGraphBox = ce('div');

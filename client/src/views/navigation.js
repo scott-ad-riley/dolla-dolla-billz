@@ -5,7 +5,6 @@ var Navigation = function (app) {
 }
 
 Navigation.prototype.render = function () {
-  console.log('called nav render!')
   var nav = ce('nav');
   var logo = this.logo();
   nav.appendChild(this.logo());

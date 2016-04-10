@@ -3,13 +3,19 @@ var Router = function (app, routePrefixer) {
 }
 
 Router.prototype.routeWithPath = function (path) {
-  return this.routes.find(function (route) {
+  var result = this.routes.find(function (route) {
     return route.path === path;
   });
+  if (!result) {
+    return this.routes.find(function (route) {
+      return route.defaultRoute;
+    })
+  }
+  return result;
 }
 
 Router.prototype.loadInitialPage = function (requestedPath) {
-  var route = this.routeWithPath(requestedPath)
+  var route = this.routeWithPath(requestedPath);
   if (route.dataPath) {
     this.fetchData(route, function (data) {
         replaceInHistory(route)
@@ -22,11 +28,10 @@ Router.prototype.loadInitialPage = function (requestedPath) {
 
 Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
-  console.log("loading route:", route)
   if (route.dataPath) {
     this.fetchData(route, function (data) {
         addToHistory(route)
-      })
+      }, false)
   } else {
     addToHistory(route);
     route.onLoad();
@@ -36,19 +41,20 @@ Router.prototype.loadNewPage = function (requestedPath) {
 Router.prototype.loadExistingPage = function (routeObjFromHistory) {
   var route = this.routeWithPath(routeObjFromHistory.path);
   if (route.dataPath) {
-    this.fetchData(route, function (data) {
-      console.log("not modified history!")
-    })
+    this.fetchData(route, null, false)
   } else {
     route.onLoad();
   }
 }
 
-Router.prototype.fetchData = function (route, callback) {
-  if (route.data) {
-    console.log("got %s from the cache", route.path)
+Router.prototype.fetchDataNoCache = function (route) {
+  this.fetchData(route, null, true);
+}
+
+Router.prototype.fetchData = function (route, callback, disableCache) {
+  if (route.data && !disableCache) {
     route.onLoad(route.data);
-    callback(route.data);
+    if (callback) callback(route.data, this.fetchDataNoCache);
   } else {
     var url = route.dataPath;
     var request = new XMLHttpRequest();
@@ -58,9 +64,9 @@ Router.prototype.fetchData = function (route, callback) {
         var result = JSON.parse(request.responseText);
         route.onLoad(result);
         route.data = result;
-        callback(result);
+        if (callback) callback(result, this.fetchDataNoCache);
       }
-    }
+    }.bind(this)
     request.send();
   }
 }
