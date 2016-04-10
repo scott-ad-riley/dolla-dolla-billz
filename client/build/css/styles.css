@@ -1,7 +1,7 @@
 /*body {
   height: 700px;  temporary until we get some content
 }*/
-
+.pure-g {letter-spacing: initial;} /* resetting it to default */
 .wrap {
   min-width: 600px;
   width: 80%;
