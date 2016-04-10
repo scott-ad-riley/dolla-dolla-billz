@@ -63,29 +63,6 @@ window.onload = function() {
   header.appendChild(navigation.render());
   router.loadInitialPage(window.location.pathname)
   window.onpopstate = function () {
-    console.log(history)
     router.loadExistingPage(history.state)
   }
-  // var url = '/api/portfolio';
-  // var userPortfolio = new Portfolio(url);
-  // userPortfolio.addUpdateCallback(displayView);
-
-  // var lineGraph = document.getElementById('line-graph');
-  // var createChart = function(holdings) {
-  //   new LineChart(lineGraph, holdings);
-  // };
-  // userPortfolio.addUpdateCallback(createChart);
-
-  // var pieChart = document.getElementById('pie-chart');
-  // var createPieChart = function(holdings){
-  //   new PieChart(pieChart, holdings);
-  // };
-  //   userPortfolio.addUpdateCallback(createPieChart);
-  //   userPortfolio.fetch(Holding);
-
 };
-
-// var displayView = function (holdingsArray) {
-//   var portfolioView = new PortfolioView(holdingsArray);
-//   document.getElementsByClassName('pure-g')[0].appendChild(portfolioView.render());
-// };
