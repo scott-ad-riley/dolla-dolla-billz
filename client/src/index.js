@@ -12,17 +12,17 @@ var routes = [
   {
     path: "/portfolio",
     heading: "My Portfolio",
-    onload: function (data) {
+    onLoad: function (data) {
       var userPortfolio = new Portfolio(null, data, Holding);
       console.log(userPortfolio)
       var container = gid('container');
       var lineGraphBox = ce('div');
-      lineGraphBox.class = "pure-u-12-24";
+      lineGraphBox.classList.add("pure-u-12-24");
       container.appendChild(lineGraphBox);
       var lineGraph = new LineChart(lineGraphBox, userPortfolio.holdings);
       var portfolioView = new PortfolioView(userPortfolio.holdings);
       var tableBox = ce('div');
-      tableBox.class = "pure-u-12-24";
+      tableBox.classList.add("pure-u-12-24");
       tableBox.appendChild(portfolioView.render());
       container.appendChild(tableBox);
     }
