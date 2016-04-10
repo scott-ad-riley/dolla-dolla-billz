@@ -12,10 +12,12 @@ var routes = [
   {
     path: "/portfolio",
     heading: "My Portfolio",
+    dataPath: "/api/portfolio",
     onLoad: function (data) {
       var userPortfolio = new Portfolio(null, data, Holding);
       console.log(userPortfolio)
       var container = gid('container');
+      container.innerHTML = "";
       var lineGraphBox = ce('div');
       lineGraphBox.classList.add("pure-u-12-24");
       container.appendChild(lineGraphBox);
@@ -29,15 +31,24 @@ var routes = [
   },
   {
     path: "/market",
-    heading: "The Market"
+    heading: "The Market",
+    onLoad: function () {
+      container.innerHTML = "This is the market page";
+    }
   },
   {
     path: "/about",
-    heading: "About Us"
+    heading: "About Us",
+    onLoad: function () {
+      container.innerHTML = "This is the about page";
+    }
   },
   {
     path: "/queries",
-    heading: "Queries"
+    heading: "Queries",
+    onLoad: function () {
+      container.innerHTML = "This is the queries page";
+    }
   }
 ]
 
@@ -46,13 +57,15 @@ window.onload = function() {
   var navigation = new Navigation(routes);
   var header = gid('header');
   navigation.onLinkClicked = function (path, event) {
-    console.log(arguments);
-    alert("something")
     event.preventDefault();
     router.loadNewPage(path);
   }
   header.appendChild(navigation.render());
-  router.loadInitialPage(window.location.pathname) // might become loadInitial which does replaceState instead of pushState
+  router.loadInitialPage(window.location.pathname)
+  window.onpopstate = function () {
+    console.log(history)
+    router.loadExistingPage(history.state)
+  }
   // var url = '/api/portfolio';
   // var userPortfolio = new Portfolio(url);
   // userPortfolio.addUpdateCallback(displayView);
@@ -72,7 +85,7 @@ window.onload = function() {
 
 };
 
-var displayView = function (holdingsArray) {
-  var portfolioView = new PortfolioView(holdingsArray);
-  document.getElementsByClassName('pure-g')[0].appendChild(portfolioView.render());
-};
+// var displayView = function (holdingsArray) {
+//   var portfolioView = new PortfolioView(holdingsArray);
+//   document.getElementsByClassName('pure-g')[0].appendChild(portfolioView.render());
+// };

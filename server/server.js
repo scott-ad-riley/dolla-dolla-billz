@@ -61,3 +61,15 @@ app.post('/api/portfolio', function(req, res) {
   res.status(200).end();
   db.close(); 
 });
+
+// app.get("/api/market", function (req, res) {
+//   res.json({"dataFor": "the market"});
+// });
+
+// app.get("/api/about", function (req, res) {
+//   res.json({"dataFor": "the about"});
+// });
+
+// app.get("/api/queries", function (req, res) {
+//   res.json({"dataFor": "the queries"});
+// });
