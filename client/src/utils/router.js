@@ -4,6 +4,7 @@ var Router = function (app) {
 }
 
 Router.prototype.loadPage = function (requestedPath) {
+  console.log('called loadpage')
   var route = this.routes.find(function (route) {
     return route.path === requestedPath;
   });
