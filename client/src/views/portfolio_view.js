@@ -12,6 +12,12 @@ var defaultFields = [
     value: function (holding) {
       return "£" + (holding.value() / 100).toFixed(2);
     }
+  },
+  {
+    heading:"Change",
+    value: function (holding) {
+      return holding.change() + "%";
+    }
   }
 ];
 
