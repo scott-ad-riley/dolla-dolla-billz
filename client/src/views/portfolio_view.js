@@ -6,7 +6,13 @@ var defaultFields = [
   { heading:"Buy Price (p)" },
   { heading:"Quantity" },
   { heading:"Buy Date" },
-  { heading:"Price (p)" },
+  { heading:"Price (p)",
+    value: function (holding) {
+      var span = ce('span');
+      span.innerText = Math.round((holding.price + 0.00001) * 100) / 100; // thanks stackoverflow
+      return span;
+    }
+   },
   {
     heading:"Value",
     value: function (holding) {
