@@ -8,7 +8,7 @@ var HoldingView = function (holdingObj, fields) {
     this.fields.forEach(function (field) {
       var td = document.createElement("td");
       if (typeof field.value === "function") {
-        td.innerHTML = field.value(this.data);
+        td.appendChild(field.value(this.data));
       } else {
         td.innerHTML = this.data[camelCase(field.heading)];
       }

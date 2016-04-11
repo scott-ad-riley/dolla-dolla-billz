@@ -8,6 +8,14 @@
   margin: auto;
 }
 
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
 /*.logo-left {
   float: left;
 }*/
