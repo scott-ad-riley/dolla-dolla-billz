@@ -1,5 +1,4 @@
 require('short-dom')();
-var HoldingView = require('./holding_view.js');
 var formatPercent = require("./percent_change_view.js");
 var defaultFields = [
   { heading:"Name" },
@@ -22,17 +21,16 @@ var defaultFields = [
   }
 ];
 
-var PortfolioView = function (portfolioObj, headings) {
-  this.data = portfolioObj;
+var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
+  this.data = portfolioObj.holdings;
   this.fields = headings || defaultFields;
   this.render = function () {
     var tableEl = document.createElement("table");
     tableEl.id = "portfolio-table"
     tableEl.classList.add('pure-u-12-24');
     tableEl.appendChild(this.renderHeader());
-
     this.data.forEach(function (holding) {
-      var holdingView = new HoldingView(holding, this.fields);
+      var holdingView = new HoldingViewConstructor(holding, this.fields);
       tableEl.appendChild(holdingView.render());
     }.bind(this))
 
@@ -46,6 +44,14 @@ var PortfolioView = function (portfolioObj, headings) {
       tableHeadingRow.appendChild(th);
     })
     return tableHeadingRow;
+  }
+
+  this.makeEditable = function (requestedHeading) {
+    var removeKeys = /\(.+/g;
+    var heading = this.fields.find(function (field) {
+      return field.heading.replace(removeKeys, "").trim() === requestedHeading;
+    })
+    heading.isEditable = true;
   }
 }
 module.exports = PortfolioView;

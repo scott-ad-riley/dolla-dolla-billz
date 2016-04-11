@@ -11,7 +11,7 @@ var HoldingView = require('./views/holding_view.js');
 var LineChart = require('./views/charts/portfolio_line_chart.js');
 var PieChart = require('./views/charts/portfolio_pie_chart.js');
 // User Query Views
-var DynamicPortfolioView = require('./views/queries/dynamic_portfolio_view.js')
+var DynamicHoldingView = require('./views/queries/dynamic_holding_view.js')
 
 var router = new Router();
 router.route({
@@ -26,7 +26,7 @@ router.route({
     lineGraphBox.classList.add("pure-u-12-24");
     container.appendChild(lineGraphBox);
     var lineGraph = new LineChart(lineGraphBox, userPortfolio.holdings);
-    var portfolioView = new PortfolioView(userPortfolio.holdings);
+    var portfolioView = new PortfolioView(userPortfolio.holdings, HoldingView);
     var tableBox = ce('div');
     tableBox.classList.add("pure-u-12-24");
     tableBox.appendChild(portfolioView.render());
@@ -59,7 +59,10 @@ router.route({
   dataPath: "/api/portfolio", 
   onLoad: function (data, refreshCache) {
     container.innerHTML = "";
-    var DynamicPortfolio = new DynamicPortfolioView(new Portfolio(data, Holding));
+    var DynamicPortfolio = new PortfolioView(new Portfolio(data, Holding), DynamicHoldingView);
+    DynamicPortfolio.makeEditable("Quantity");
+    DynamicPortfolio.makeEditable("Price");
+    DynamicPortfolio.makeEditable("Value");
     container.appendChild(DynamicPortfolio.render());
   }
 });

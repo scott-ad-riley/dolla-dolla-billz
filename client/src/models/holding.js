@@ -16,7 +16,6 @@ Holding.prototype.change = function (distance) {
   var distance = distance || 1;
   var previousPrice = this.pastCloseOfDayPrices[(this.pastCloseOfDayPrices.length - (distance))]
   var difference = this.price - previousPrice;
-  console.log("new difference: ", difference);
   return ((difference / previousPrice) * 100).toFixed(1);
 }
 
