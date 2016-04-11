@@ -34,4 +34,12 @@ Holding.prototype.dynamicQuantity = function (newValue) {
   return this;
 }
 
+Holding.prototype.dynamicChange = function (newValue) {
+  var stripArrowsAndPercent = /[\u25B2\u25BC%]/g
+  var percentValue = parseFloat(newValue.replace(stripArrowsAndPercent, "")) / 100;
+  var previousPrice = this.pastCloseOfDayPrices[this.pastCloseOfDayPrices.length - 1];
+  this.price = Math.round((percentValue * previousPrice) + previousPrice);
+  return this;
+}
+
 module.exports = Holding;

@@ -63,6 +63,7 @@ router.route({
     DynamicPortfolio.makeEditable("Quantity");
     DynamicPortfolio.makeEditable("Price");
     DynamicPortfolio.makeEditable("Value");
+    DynamicPortfolio.makeEditable("Change");
     container.appendChild(DynamicPortfolio.render());
   }
 });

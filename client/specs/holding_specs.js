@@ -45,5 +45,10 @@ describe("A Holding", function () {
   it("should update if the quantity increases", function () {
     var updatedHolding = holding.dynamicQuantity(2500)
     assert.equal(300000, updatedHolding.value());
+  });
+
+  it("should update if the change increases", function () {
+    var updatedHolding = holding.dynamicChange(7.1);
+    assert.equal(118, updatedHolding.price);
   })
 });
