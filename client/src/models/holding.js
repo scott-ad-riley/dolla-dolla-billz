@@ -30,7 +30,6 @@ Holding.prototype.dynamicValue = function (newValue) {
 }
 
 Holding.prototype.dynamicQuantity = function (newValue) {
-  console.log("args: ", newValue);
   this.quantity = newValue;
   return this;
 }
