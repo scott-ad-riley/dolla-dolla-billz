@@ -31,4 +31,14 @@ Portfolio.prototype.change = function (distance) {
   return ((difference / previousValue) * 100).toFixed(1) * -1;
 }
 
+Portfolio.prototype.totalValue = function() {
+  var totalValue = 0;
+  for (var i = this.holdings.length - 1; i >= 0; i--) {
+    totalValue += this.holdings[i].value();
+  };
+  return totalValue;
+};
+
+module.exports = Portfolio;
+
 module.exports = Portfolio;

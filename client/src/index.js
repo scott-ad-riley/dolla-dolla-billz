@@ -26,6 +26,9 @@ router.route({
     tableBox.classList.add("pure-u-12-24");
     tableBox.appendChild(portfolioView.render());
     container.appendChild(tableBox);
+    var totalValueText = document.createElement('p');
+    totalValueText.innerHTML = 'Total Value: £' +userPortfolio.totalValue().toLocaleString();
+    tableBox.appendChild(totalValueText);
   }
 });
 
