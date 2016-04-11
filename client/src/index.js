@@ -16,7 +16,6 @@ router.route({
   defaultRoute: true,
   onLoad: function (data, refreshCache) {
     var userPortfolio = new Portfolio(data, Holding);
-    var container = gid('container');
     container.innerHTML = "";
     var lineGraphBox = ce('div');
     lineGraphBox.classList.add("pure-u-12-24");
@@ -101,6 +100,7 @@ var routes = [
 window.onload = function() {
   var navigation = new Navigation(routes);
   var header = gid('header');
+  var container = gid('container');
   navigation.onLinkClicked = function (path, event) {
     event.preventDefault();
     router.loadNewPage(path);
