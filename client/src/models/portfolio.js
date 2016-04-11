@@ -22,7 +22,6 @@ Portfolio.prototype.addUpdateCallback = function (callback) {
 };
 
 Portfolio.prototype.change = function (distance) {
-  // (Price Sold - Previous Price)/(Previous Price)
   var distance = distance || 1;
   var previousValue = this.holdings.reduce(function (mem, holding) {
     return mem + (holding.pastCloseOfDayPrices[(holding.pastCloseOfDayPrices.length - (distance))] * holding.quantity)
