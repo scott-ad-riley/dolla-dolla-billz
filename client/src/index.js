@@ -1,12 +1,17 @@
 require('short-dom')();
-var Portfolio = require('./models/portfolio.js');
-var Holding = require('./models/holding.js');
-var PortfolioView = require('./views/portfolio_view.js');
-var HoldingView = require('./views/holding_view.js');
-var LineChart = require('./views/charts/portfolio_line_chart.js');
-var PieChart = require('./views/charts/portfolio_pie_chart.js');
 var Router = require('./utils/router.js');
 var Navigation = require('./views/navigation.js');
+// Models
+var Portfolio = require('./models/portfolio.js');
+var Holding = require('./models/holding.js');
+// Model Views
+var PortfolioView = require('./views/portfolio_view.js');
+var HoldingView = require('./views/holding_view.js');
+// Chart Views
+var LineChart = require('./views/charts/portfolio_line_chart.js');
+var PieChart = require('./views/charts/portfolio_pie_chart.js');
+// User Query Views
+var DynamicPortfolioView = require('./views/queries/dynamic_portfolio_view.js')
 
 var router = new Router();
 router.route({
@@ -51,8 +56,11 @@ router.route({
 router.route({
   path: "/queries",
   heading: "Queries",
-  onLoad: function () {
-    container.innerHTML = "This is the queries page";
+  dataPath: "/api/portfolio", 
+  onLoad: function (data, refreshCache) {
+    container.innerHTML = "";
+    var DynamicPortfolio = new DynamicPortfolioView(new Portfolio(data, Holding));
+    container.appendChild(DynamicPortfolio.render());
   }
 });
 
