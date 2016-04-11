@@ -27,7 +27,7 @@ Portfolio.prototype.change = function (distance) {
     return mem + (holding.pastCloseOfDayPrices[(holding.pastCloseOfDayPrices.length - (distance))] * holding.quantity)
   }, 0);
   var difference = this.value() - previousValue;
-  return ((difference / previousValue) * 100).toFixed(1) * -1;
+  return ((difference / previousValue) * 100).toFixed(1);
 }
 
 module.exports = Portfolio;

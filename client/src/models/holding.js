@@ -16,7 +16,24 @@ Holding.prototype.change = function (distance) {
   var distance = distance || 1;
   var previousPrice = this.pastCloseOfDayPrices[(this.pastCloseOfDayPrices.length - (distance))]
   var difference = this.price - previousPrice;
-  return ((difference / previousPrice) * 100).toFixed(1) * -1;
+  console.log("new difference: ", difference);
+  return ((difference / previousPrice) * 100).toFixed(1);
+}
+
+Holding.prototype.dynamicPrice = function (newValue) {
+  this.price = newValue;
+  return this;
+}
+
+Holding.prototype.dynamicValue = function (newValue) {
+  this.price = parseInt(newValue.replace("£", "") * 100) / this.quantity;
+  return this;
+}
+
+Holding.prototype.dynamicQuantity = function (newValue) {
+  console.log("args: ", newValue);
+  this.quantity = newValue;
+  return this;
 }
 
 module.exports = Holding;

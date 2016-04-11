@@ -1,15 +1,17 @@
 require('short-dom')();
 var formatPercent = require("../percent_change_view.js");
-var HoldingView = require('../holding_view.js');
+var DynamicHoldingView = require('./dynamic_holding_view.js');
+var camelCase = require('../../utils/strip_heading.js');
 var defaultFields = [
   { heading:"Name" },
   { heading:"Epic" },
   { heading:"Buy Price (p)" },
-  { heading:"Quantity" },
+  { heading:"Quantity", isEditable: true },
   { heading:"Buy Date" },
-  { heading:"Price (p)" },
+  { heading:"Price (p)", isEditable: true },
   {
     heading:"Value",
+    isEditable: true,
     value: function (holding) {
       var span = ce('span');
       span.innerText = "£" + (holding.value() / 100).toFixed(2)
@@ -34,7 +36,7 @@ DynamicPortfolioView.prototype.render = function () {
   tableEl.appendChild(this.renderHeader());
 
   this.data.forEach(function (holding) {
-    var holdingView = new HoldingView(holding, this.fields);
+    var holdingView = new DynamicHoldingView(holding, this.fields);
     tableEl.appendChild(holdingView.render());
   }.bind(this))
 
@@ -49,5 +51,6 @@ DynamicPortfolioView.prototype.renderHeader = function () {
   })
   return tableHeadingRow;  
 }
+
 
 module.exports = DynamicPortfolioView;
