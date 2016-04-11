@@ -27,7 +27,7 @@ router.route({
     tableBox.appendChild(portfolioView.render());
     container.appendChild(tableBox);
   }
-})
+});
 
 router.route({
   path: "/market",
@@ -35,7 +35,7 @@ router.route({
   onLoad: function () {
     container.innerHTML = "This is the market page";
   }
-})
+});
 
 router.route({
   path: "/about",
@@ -43,7 +43,7 @@ router.route({
   onLoad: function () {
     container.innerHTML = "This is the about page";
   }
-})
+});
 
 router.route({
   path: "/queries",
@@ -51,63 +51,19 @@ router.route({
   onLoad: function () {
     container.innerHTML = "This is the queries page";
   }
-})
-
-var routes = [
-  {
-    path: "/portfolio",
-    heading: "My Portfolio",
-    dataPath: "/api/portfolio",
-    defaultRoute: true,
-    onLoad: function (data, refreshCache) {
-      var userPortfolio = new Portfolio(data, Holding);
-      var container = gid('container');
-      container.innerHTML = "";
-      var lineGraphBox = ce('div');
-      lineGraphBox.classList.add("pure-u-12-24");
-      container.appendChild(lineGraphBox);
-      var lineGraph = new LineChart(lineGraphBox, userPortfolio.holdings);
-      var portfolioView = new PortfolioView(userPortfolio.holdings);
-      var tableBox = ce('div');
-      tableBox.classList.add("pure-u-12-24");
-      tableBox.appendChild(portfolioView.render());
-      container.appendChild(tableBox);
-    }
-  },
-  {
-    path: "/market",
-    heading: "The Market",
-    onLoad: function () {
-      container.innerHTML = "This is the market page";
-    }
-  },
-  {
-    path: "/about",
-    heading: "About Us",
-    onLoad: function () {
-      container.innerHTML = "This is the about page";
-    }
-  },
-  {
-    path: "/queries",
-    heading: "Queries",
-    onLoad: function () {
-      container.innerHTML = "This is the queries page";
-    }
-  }
-]
+});
 
 window.onload = function() {
-  var navigation = new Navigation(routes);
+  var navigation = new Navigation(router.routes);
   var header = gid('header');
   var container = gid('container');
   navigation.onLinkClicked = function (path, event) {
     event.preventDefault();
     router.loadNewPage(path);
-  }
+  };
   header.appendChild(navigation.render());
   router.loadInitialPage(window.location.pathname)
   window.onpopstate = function () {
     router.loadExistingPage(history.state)
-  }
+  };
 };
