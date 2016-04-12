@@ -39,7 +39,11 @@ var HoldingView = function (holdingObj, fields) {
     // black magic.
     el.focus()
     var sel = window.getSelection();
-    sel.collapse(sel.focusNode.childNodes[0].childNodes[0], cursorOffset);
+    if (sel.focusNode.childNodes[0].childNodes.length) {
+      sel.collapse(sel.focusNode.childNodes[0].childNodes[0], cursorOffset);
+    } else {
+      sel.collapse(sel.focusNode.childNodes[0], cursorOffset);
+    }
   }
 
   this.onChange = function (methodName, holdingObj, event) {
