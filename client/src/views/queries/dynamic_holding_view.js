@@ -1,5 +1,6 @@
 require('short-dom')();
 var camelCase = require('../../utils/strip_heading.js');
+var getDeepestChildNode = require('../../utils/get_deepest_child_node.js');
 var HoldingView = function (holdingObj, fields) {
   this.data = holdingObj;
   this.fields = fields;
@@ -21,16 +22,27 @@ var HoldingView = function (holdingObj, fields) {
     return this.tableRow.childNodes[cellPosition]
   }
 
+  this.getCellContentsAsText = function (td) {
+    return getDeepestChildNode(td);
+  }
+
   this.renderCell = function (isUpdate, editedCellIndex, cursorOffset, holdingObj, field, cellIndex, fields) {
     var td = (isUpdate) ? this.getCell(cellIndex) : document.createElement("td");
     // if (editedCellIndex === cellIndex) return;
+    var previousContent = this.getCellContentsAsText(td);
     td.innerText = "";
     td.style.width = this.cellWidth();
+    var newContent = (typeof field.value === "function") ? field.value(holdingObj) : holdingObj[camelCase(field.heading)];
+    if (this.getCellContentsAsText(newContent) !== previousContent && isUpdate) {
+      td.classList.add("updated");
+      setTimeout(function () {
+        td.classList.remove('updated');
+      }, 600)
+    }
     if (typeof field.value === "function") {
       td.appendChild(field.value(holdingObj));
     } else {
       td.innerHTML = holdingObj[camelCase(field.heading)];
-      console.log(holdingObj[camelCase(field.heading)]);
     }
     if (field.isEditable) {
       td.contentEditable = true;
