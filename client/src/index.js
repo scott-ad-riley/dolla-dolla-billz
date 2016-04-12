@@ -57,19 +57,19 @@ router.route({
     stocksList.onchange = function() {
       while (chartContainer.firstChild) {
           chartContainer.removeChild(chartContainer.firstChild);
-      };
+      }
       var stockChart = ce('div');
-      stockChart.id = "stockChart"
+      stockChart.id = "stockChart";
       stockChart.classList.add("pure-g-12-24");
       chartContainer.appendChild(stockChart);
       var selected = stocksList.value;
 
-      function findStock(stock) { 
+      function findStock(stock) {
         return stock.symbol === selected;
       }
       var stockToChart = data.find(findStock); 
       var stockLineGraph = new StockLineChart(stockChart, stockToChart);
-    }
+    };
     stocksList.onchange();
   }
 });
@@ -99,8 +99,8 @@ window.onload = function() {
     router.loadNewPage(path);
   };
   header.appendChild(navigation.render());
-  router.loadInitialPage(window.location.pathname)
+  router.loadInitialPage(window.location.pathname);
   window.onpopstate = function () {
-    router.loadExistingPage(history.state)
+    router.loadExistingPage(history.state);
   };
 };

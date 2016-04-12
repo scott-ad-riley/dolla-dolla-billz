@@ -51,4 +51,4 @@ describe("A Portfolio", function () {
   it("should calculate it's percent change since third last price", function () {
     assert.equal(11.4, userPortfolio.change(3));
   });
-})
+});

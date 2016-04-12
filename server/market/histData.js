@@ -39,8 +39,8 @@ var nowDate = new Date();
 var lastWeek = new Date(nowDate.getTime()-1000*60*60*24*20);
 var lastWeekDate = lastWeek.yahoodate();
 
-query = 'select * from yahoo.finance.historicaldata where symbol in ("'+data.symbol+'") and startDate = "'+lastWeekDate+'" and endDate = "'+todayDate+'"'
-url = 'https://query.yahooapis.com/v1/public/yql?q='+query+'&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback='
+query = 'select * from yahoo.finance.historicaldata where symbol in ("'+data.symbol+'") and startDate = "'+lastWeekDate+'" and endDate = "'+todayDate+'"';
+url = 'https://query.yahooapis.com/v1/public/yql?q='+query+'&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
 
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
@@ -52,17 +52,16 @@ request.onload = function() {
     var pastPricesRaw = [];
     for (var i = response.length - 1; i >= 0; i--) {
       pastPricesRaw.push(parseFloat(response[i].Close).toFixed(2));
-    };
+    }
     var pastPrices = [];
     var counter  = 0;
     while(counter < 7) {
-      var last = pastPricesRaw.pop()
+      var last = pastPricesRaw.pop();
       pastPrices.push(last);
       counter ++;
     }
     var stock = new Stock(data, pastPrices);
     callback(stock);
-    ;
   }
 };
 request.send();

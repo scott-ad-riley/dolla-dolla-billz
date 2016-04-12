@@ -7,7 +7,6 @@ var MongoClient = require('mongodb').MongoClient;
 var marketUpdate = require('./market/app.js');
 var url = 'mongodb://localhost:27017/dolla_dolla_db';
 
-
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 
@@ -17,7 +16,7 @@ app.get('/', function (req, res) {
 
 app.get("/:page", function (req, res) {
   res.sendFile(path.join(__dirname + '/../client/build/index.html'));
-})
+});
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

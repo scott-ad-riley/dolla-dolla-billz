@@ -1,10 +1,10 @@
 var Router = function () {
   this.routes = [];
-}
+};
 
 Router.prototype.route = function (route) {
   this.routes.push(route);
-}
+};
 
 Router.prototype.routeWithPath = function (path) {
   var result = this.routes.find(function (route) {
@@ -13,47 +13,47 @@ Router.prototype.routeWithPath = function (path) {
   if (!result) {
     return this.routes.find(function (route) {
       return route.defaultRoute;
-    })
+    });
   }
   return result;
-}
+};
 
 Router.prototype.loadInitialPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
   if (route.dataPath) {
     this.fetchData(route, function (data) {
-        replaceInHistory(route)
-      })
+        replaceInHistory(route);
+      });
   } else {
     replaceInHistory(route);
     route.onLoad();
   }
-}
+};
 
 Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
   if (route.dataPath) {
     this.fetchData(route, function (data) {
-        addToHistory(route)
-      }, false)
+        addToHistory(route);
+      }, false);
   } else {
     addToHistory(route);
     route.onLoad();
   }
-}
+};
 
 Router.prototype.loadExistingPage = function (routeObjFromHistory) {
   var route = this.routeWithPath(routeObjFromHistory.path);
   if (route.dataPath) {
-    this.fetchData(route, null, false)
+    this.fetchData(route, null, false);
   } else {
     route.onLoad();
   }
-}
+};
 
 Router.prototype.fetchDataNoCache = function (route) {
   this.fetchData(route, null, true);
-}
+};
 
 Router.prototype.fetchData = function (route, callback, disableCache) {
   if (route.data && !disableCache) {
@@ -70,24 +70,24 @@ Router.prototype.fetchData = function (route, callback, disableCache) {
         route.data = result;
         if (callback) callback(result, this.fetchDataNoCache);
       }
-    }.bind(this)
+    }.bind(this);
     request.send();
   }
-}
+};
 
 var formatRouteToSave = function (route) {
   return {
     path: route.path,
     data: route.data || null
-  }
-}
+  };
+};
 
 var replaceInHistory = function (route) {
-  window.history.replaceState(formatRouteToSave(route), route.heading, route.path)
-}
+  window.history.replaceState(formatRouteToSave(route), route.heading, route.path);
+};
 
 var addToHistory = function (route) {
   window.history.pushState(formatRouteToSave(route), route.heading, route.path);
-}
+};
 
 module.exports = Router;

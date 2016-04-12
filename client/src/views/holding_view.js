@@ -13,8 +13,8 @@ var HoldingView = function (holdingObj, fields) {
         td.innerHTML = this.data[camelCase(field.heading)];
       }
       tr.appendChild(td);
-    }.bind(this))
+    }.bind(this));
     return tr;
-  }
-}
+  };
+};
 module.exports = HoldingView;

@@ -2,14 +2,14 @@ require('short-dom')();
 var Navigation = function (app) {
   this.pages = app;
   this.onLinkClicked = null;
-}
+};
 
 Navigation.prototype.render = function () {
   var nav = ce('nav');
   var logo = this.logo();
   nav.appendChild(this.logo());
   var ul = ce('ul');
-  ul.classList.add('menu-right')
+  ul.classList.add('menu-right');
   this.pages.forEach(function (page) {
     var li = ce('li');
     var link = ce('a');
@@ -18,10 +18,10 @@ Navigation.prototype.render = function () {
     link.onclick = this.onLinkClicked.bind(this, page.path);
     li.appendChild(link);
     ul.appendChild(li);
-  }.bind(this))
+  }.bind(this));
   nav.appendChild(ul);
   return nav;
-}
+};
 
 
 Navigation.prototype.logo = function () {
@@ -32,6 +32,6 @@ Navigation.prototype.logo = function () {
   image.alt = "Dolla Dolla Billz Logo";
   container.appendChild(image);
   return container;
-}
+};
 
 module.exports = Navigation;
