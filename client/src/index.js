@@ -38,6 +38,14 @@ router.route({
   dataPath: "/api/market",
   onLoad: function (data, refreshCache) {
     container.innerHTML = "";
+    var left = document.createElement('div');
+    left.classList.add("pure-u-12-24");    
+    container.appendChild(left);
+
+    var right = document.createElement('div');
+    right.classList.add("pure-u-12-24");        
+    container.appendChild(right);
+    
     data.sort(function(a,b) {
       if(a.name < b.name) return 1;
       if(a.name > b.name) return -1;
@@ -50,18 +58,17 @@ router.route({
       option.innerText = data[i].name;
       stocksList.appendChild(option);
     }
-    container.appendChild(stocksList);
+    left.appendChild(stocksList);
     var chartContainer = ce('div');
     container.appendChild(chartContainer);
 
     stocksList.onchange = function() {
-      while (chartContainer.firstChild) {
-          chartContainer.removeChild(chartContainer.firstChild);
+      while (right.firstChild) {
+          right.removeChild(right.firstChild);
       }
       var stockChart = ce('div');
       stockChart.id = "stockChart";
-      stockChart.classList.add("pure-g-12-24");
-      chartContainer.appendChild(stockChart);
+      right.appendChild(stockChart);
       var selected = stocksList.value;
 
       function findStock(stock) {
