@@ -3,11 +3,8 @@ var formatPercent = require("./percent_change_view.js");
 var getParentNodeOfType = require('../utils/get_parent_node_of_type.js')
 var HoldingView = require('./holding_view.js');
 var defaultFields = [
-  // { heading:"Name" },
   { heading:"Epic" },
-  // { heading:"Buy Price (p)" },
   { heading:"Quantity" },
-  // { heading:"Buy Date" },
   { heading:"Price (p)",
     value: function (holding) {
       var span = ce('span');
@@ -34,6 +31,7 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   this.fields = headings || defaultFields;
   this.tableEl = ce('table')
   this.render = function () {
+    this.tableEl.style.tableLayout = "fixed";
     this.tableEl.id = "portfolio-table";
     this.tableEl.style.width = "100%";
     this.tableEl.classList.add('pure-table');

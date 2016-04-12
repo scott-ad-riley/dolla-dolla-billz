@@ -9,6 +9,9 @@ var HoldingView = function (holdingObj, fields) {
     this.fields.forEach(this.renderCell.bind(this, false, null, null, this.data))
     return this.tableRow;
   }
+  this.cellWidth = function () {
+    return (100 / this.fields).toFixed(5) + "%";
+  }
 
   this.renderSpecificRow = function (updatedHoldingObject, positionEdited, cursorOffset) {
     this.fields.forEach(this.renderCell.bind(this, true, positionEdited, cursorOffset, updatedHoldingObject));
@@ -22,6 +25,7 @@ var HoldingView = function (holdingObj, fields) {
     var td = (isUpdate) ? this.getCell(cellIndex) : document.createElement("td");
     // if (editedCellIndex === cellIndex) return;
     td.innerText = "";
+    td.style.width = this.cellWidth();
     if (typeof field.value === "function") {
       td.appendChild(field.value(holdingObj));
     } else {
