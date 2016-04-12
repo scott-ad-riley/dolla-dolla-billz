@@ -28,6 +28,7 @@ Portfolio.prototype.change = function (distance) {
   }, 0);
   var difference = this.value() - previousValue;
   return ((difference / previousValue) * 100).toFixed(1);
-}
+};
+
 
 module.exports = Portfolio;

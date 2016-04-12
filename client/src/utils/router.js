@@ -2,11 +2,11 @@ var convertPathToArray = require('./path_to_array.js');
 var Router = function () {
   this.routes = [];
   this.currentPath = "";
-}
+};
 
 Router.prototype.route = function (route) {
   this.routes.push(route);
-}
+};
 
 Router.prototype.routeWithPath = function (path) {
   this.currentPath = path;
@@ -36,7 +36,7 @@ Router.prototype.getDefaultRoute = function () {
       return route.defaultRoute;
     }
   }.bind(this))
-}
+};
 
 Router.prototype.loadInitialPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
@@ -48,7 +48,7 @@ Router.prototype.loadInitialPage = function (requestedPath) {
     replaceInHistory(route, this.currentPath);
     route.onLoad(null, null, this);
   }
-}
+};
 
 Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
@@ -60,7 +60,7 @@ Router.prototype.loadNewPage = function (requestedPath) {
     addToHistory(route, this.currentPath);
     route.onLoad(null, null, this);
   }
-}
+};
 
 Router.prototype.loadExistingPage = function (routeObjFromHistory) {
   var route = this.routeWithPath(routeObjFromHistory.url);
@@ -69,11 +69,11 @@ Router.prototype.loadExistingPage = function (routeObjFromHistory) {
   } else {
     route.onLoad(null, null, this);
   }
-}
+};
 
 Router.prototype.fetchDataNoCache = function (route) {
   this.fetchData(route, this.refreshCache.bind(this, route), true);
-}
+};
 
 Router.prototype.fetchData = function (route, callback, disableCache, requestedPath) {
   if (route.data && !disableCache) {
@@ -90,10 +90,10 @@ Router.prototype.fetchData = function (route, callback, disableCache, requestedP
         route.data = result;
         if (callback) callback(result, this.fetchDataNoCache);
       }
-    }.bind(this)
+    }.bind(this);
     request.send();
   }
-}
+};
 
 Router.prototype.refreshCache = function (route) {
   route.data = null;
@@ -132,5 +132,6 @@ var replaceDynamicValue = function (requestedPath, matchedPath) {
 var hasColon = function (mem, value) {
   return value.indexOf(":") === 0 ? true : mem;
 }
+
 
 module.exports = Router;

@@ -1,6 +1,7 @@
 require('short-dom')();
 var formatPercent = require("./percent_change_view.js");
 var getParentNodeOfType = require('../utils/get_parent_node_of_type.js')
+var HoldingView = require('./holding_view.js');
 var defaultFields = [
   // { heading:"Name" },
   { heading:"Epic" },
@@ -18,7 +19,7 @@ var defaultFields = [
     heading:"Value",
     value: function (holding) {
       var span = ce('span');
-      span.innerText = "£" + (holding.value() / 100).toFixed(2)
+      span.innerText = "£" + (holding.value() / 100).toFixed(2);
       return span;
     }
   },
@@ -43,10 +44,10 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
     this.data.forEach(function (holding) {
       var holdingView = new HoldingViewConstructor(holding, this.fields);
       tableBody.appendChild(holdingView.render());
-    }.bind(this))
-
+    }.bind(this));
     return this.tableEl;
   }
+
   this.renderHeader = function () {
     var tableHeadCont = ce('thead');
     var tableHeadingRow = ce("tr");
@@ -75,4 +76,5 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
     }.bind(this);
   }
 }
+
 module.exports = PortfolioView;

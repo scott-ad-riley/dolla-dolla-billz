@@ -4,7 +4,7 @@ var Navigation = function (app) {
   this.pages = app;
   this.onLinkClicked = null;
   this.nav = ce('nav')
-}
+};
 
 Navigation.prototype.render = function () {
   var ul = ce('ul');

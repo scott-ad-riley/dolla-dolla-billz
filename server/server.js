@@ -7,7 +7,6 @@ var MongoClient = require('mongodb').MongoClient;
 var marketUpdate = require('./market/app.js');
 var url = 'mongodb://localhost:27017/dolla_dolla_db';
 
-
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 
