@@ -47,7 +47,7 @@ Router.prototype.loadInitialPage = function (requestedPath) {
       }.bind(this))
   } else {
     replaceInHistory(route, this.currentPath);
-    route.onLoad();
+    route.onLoad(null, null, this);
   }
 }
 
@@ -59,7 +59,7 @@ Router.prototype.loadNewPage = function (requestedPath) {
       }.bind(this), false)
   } else {
     addToHistory(route, this.currentPath);
-    route.onLoad();
+    route.onLoad(null, null, this);
   }
 }
 
@@ -68,17 +68,17 @@ Router.prototype.loadExistingPage = function (routeObjFromHistory) {
   if (route.dataPrefix || route.dataPath) {
     this.fetchData(route, null, false)
   } else {
-    route.onLoad();
+    route.onLoad(null, null, this);
   }
 }
 
 Router.prototype.fetchDataNoCache = function (route) {
-  this.fetchData(route, null, true);
+  this.fetchData(route, this.refreshCache.bind(this, route), true);
 }
 
 Router.prototype.fetchData = function (route, callback, disableCache, requestedPath) {
   if (route.data && !disableCache) {
-    route.onLoad(route.data);
+    route.onLoad(route.data, this.refreshCache.bind(this, route), this);
     if (callback) callback(route.data, this.fetchDataNoCache);
   }
   var url = route.dataPath || route.dataPrefix + this.currentPath;
@@ -87,12 +87,18 @@ Router.prototype.fetchData = function (route, callback, disableCache, requestedP
   request.onload = function () {
     if (request.status === 200) {
       var result = JSON.parse(request.responseText);
-      route.onLoad(result);
+      route.onLoad(result, this.refreshCache.bind(this, route), this);
       route.data = result;
       if (callback) callback(result, this.fetchDataNoCache);
     }
   }.bind(this)
   request.send();
+}
+
+Router.prototype.refreshCache = function (route) {
+  route.data = null;
+  route.url = this.currentPath;
+  this.loadExistingPage(route)
 }
 
 var formatRouteToSave = function (route, currentPath) {

@@ -4,11 +4,10 @@ var Holding = require('../../models/holding.js');
 var PortfolioView = require('../portfolio_view.js');
 var HoldingView = require('../holding_view.js');
 
-module.exports = function (data, refreshCache) {
+module.exports = function (data, refreshCache, router) {
   var userPortfolio = new Portfolio(data, Holding);
   container.innerHTML = "";
   var portfolioView = new PortfolioView(userPortfolio, HoldingView);
-  // must be a better way to do this
   var foo = ce('div');
   foo.classList.add('pure-u-1-5');
   container.appendChild(foo);
