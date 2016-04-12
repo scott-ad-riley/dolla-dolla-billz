@@ -33,23 +33,28 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   this.render = function () {
     var tableEl = document.createElement("table");
     tableEl.id = "portfolio-table"
-    tableEl.classList.add('pure-u-12-24');
+    tableEl.classList.add('pure-table');
+    tableEl.classList.add('pure-table-horizontal');
     tableEl.appendChild(this.renderHeader());
+    var tableBody = ce('tbody');
+    tableEl.appendChild(tableBody);
     this.data.forEach(function (holding) {
       var holdingView = new HoldingViewConstructor(holding, this.fields);
-      tableEl.appendChild(holdingView.render());
+      tableBody.appendChild(holdingView.render());
     }.bind(this))
 
     return tableEl;
   }
   this.renderHeader = function () {
-    var tableHeadingRow = document.createElement("tr");
+    var tableHeadCont = ce('thead');
+    var tableHeadingRow = ce("tr");
+    tableHeadCont.appendChild(tableHeadingRow)
     this.fields.forEach(function (field) {
       var th = document.createElement("th");
       th.innerHTML = field.heading;
       tableHeadingRow.appendChild(th);
     })
-    return tableHeadingRow;
+    return tableHeadCont;
   }
 
   this.makeEditable = function (requestedHeading) {

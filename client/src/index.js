@@ -64,6 +64,8 @@ router.route({
     DynamicPortfolio.makeEditable("Price");
     DynamicPortfolio.makeEditable("Value");
     DynamicPortfolio.makeEditable("Change");
+    var tableBox = ce('div');
+    tableBox.classList.add('pure-u-12-24');
     container.appendChild(DynamicPortfolio.render());
   }
 });
