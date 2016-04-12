@@ -1,11 +1,11 @@
 require('short-dom')();
 var formatPercent = require("./percent_change_view.js");
 var defaultFields = [
-  { heading:"Name" },
+  // { heading:"Name" },
   { heading:"Epic" },
-  { heading:"Buy Price (p)" },
+  // { heading:"Buy Price (p)" },
   { heading:"Quantity" },
-  { heading:"Buy Date" },
+  // { heading:"Buy Date" },
   { heading:"Price (p)",
     value: function (holding) {
       var span = ce('span');
@@ -32,7 +32,8 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   this.fields = headings || defaultFields;
   this.render = function () {
     var tableEl = document.createElement("table");
-    tableEl.id = "portfolio-table"
+    tableEl.id = "portfolio-table";
+    tableEl.style.width = "100%";
     tableEl.classList.add('pure-table');
     tableEl.classList.add('pure-table-horizontal');
     tableEl.appendChild(this.renderHeader());

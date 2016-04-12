@@ -1,6 +1,7 @@
 /*body {
   height: 700px;  temporary until we get some content
 }*/
+*, body, html {margin: 0; padding: 0;}
 .pure-g {letter-spacing: initial;} /* resetting it to default */
 .wrap {
   min-width: 600px;
@@ -24,7 +25,7 @@
   float: left;
 }
 
-.logo-left img{  
+.logo-left img {  
   width: 80px;
   height: 65px;
   float: left;
@@ -34,20 +35,39 @@
 
 nav {
   height: 65px;
-  background-color: #e3e3e3;
+  background-color: #2979FF;
+  padding-left: 30px;
+  margin-bottom: 20px;
 }
-
-
 
 nav ul li {
   list-style-type: none;
-  display: inline;
-  cursor: pointer;
-  font-size: 22px; 
+  display: inline-block;
   padding-right: 20px;
   margin-left: -5px;
 }
 
+nav a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.1em;
+  border-color: #ffffff;
+}
+
+nav .link {
+  font-size: 1.4em;
+  transition: color 0.5s;
+  line-height: 65px;
+  color: #eeeeee;
+}
+
+nav .link:hover {
+  color: #BBDEFB;
+}
+
+nav .link:hover a {
+  border-color: #BBDEFB !important; /* need to overwrite the js style */
+}
 
 #portfolio-table {
     border-collapse: collapse;
