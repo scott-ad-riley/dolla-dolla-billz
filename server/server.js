@@ -17,6 +17,10 @@ app.get("/:page", function (req, res) {
   res.sendFile(path.join(__dirname + '/../client/build/index.html'));
 })
 
+app.get("/portfolio/:page", function (req, res) {
+  res.sendFile(path.join(__dirname + '/../client/build/index.html'));
+})
+
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
@@ -37,6 +41,11 @@ app.get('/api/portfolio', function(req, res) {
     });
   });
 });
+
+app.get('/api/portfolio/:epic', function (req, res) {
+  res.json({something: "here"})
+  res.status(200).end()
+})
 
 
 app.post('/api/portfolio', function(req, res) {

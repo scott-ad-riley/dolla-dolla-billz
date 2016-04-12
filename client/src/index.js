@@ -25,6 +25,14 @@ router.route({
 });
 
 router.route({
+  path: "/portfolio/:epic",
+  dataPath: "/api/portfolio/:epic",
+  onLoad: function (data, refreshCache, params) {
+    
+  }
+})
+
+router.route({
   path: "/market",
   heading: "The Market",
   onLoad: function () {
