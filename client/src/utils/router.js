@@ -18,9 +18,6 @@ Router.prototype.routeWithPath = function (path) {
     return convertPathToArray(route.path)[0] === newPath[0];
   });
   if (possibleRoutes.length === 0) { // no paths found
-    var defaultRoute = this.getDefaultRoute();
-    this.currentPath = defaultRoute.path;
-    console.log("this.currentPath is actually: ", defaultRoute.path);
     return defaultRoute;
   } else if (possibleRoutes.length === 1) { // just one path matches
     return possibleRoutes[0];
@@ -34,8 +31,11 @@ Router.prototype.routeWithPath = function (path) {
 
 Router.prototype.getDefaultRoute = function () {
   return this.routes.find(function (route) {
-    return route.defaultRoute;
-  })
+    if (route.defaultRoute) {
+      this.currentPath(route.path);
+      return route.defaultRoute;
+    }
+  }.bind(this))
 }
 
 Router.prototype.loadInitialPage = function (requestedPath) {
@@ -80,7 +80,6 @@ Router.prototype.fetchData = function (route, callback, disableCache, requestedP
     route.onLoad(route.data);
     if (callback) callback(route.data, this.fetchDataNoCache);
   }
-
   var url = route.dataPrefix + this.currentPath;
   var request = new XMLHttpRequest();
   request.open("GET", url);
