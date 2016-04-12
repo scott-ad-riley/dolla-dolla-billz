@@ -1,5 +1,6 @@
 require('short-dom')();
 var formatPercent = require("./percent_change_view.js");
+var getParentNodeOfType = require('../utils/get_parent_node_of_type.js')
 var defaultFields = [
   // { heading:"Name" },
   { heading:"Epic" },
@@ -30,21 +31,21 @@ var defaultFields = [
 var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   this.data = portfolioObj.holdings;
   this.fields = headings || defaultFields;
+  this.tableEl = ce('table')
   this.render = function () {
-    var tableEl = document.createElement("table");
-    tableEl.id = "portfolio-table";
-    tableEl.style.width = "100%";
-    tableEl.classList.add('pure-table');
-    tableEl.classList.add('pure-table-horizontal');
-    tableEl.appendChild(this.renderHeader());
+    this.tableEl.id = "portfolio-table";
+    this.tableEl.style.width = "100%";
+    this.tableEl.classList.add('pure-table');
+    this.tableEl.classList.add('pure-table-horizontal');
+    this.tableEl.appendChild(this.renderHeader());
     var tableBody = ce('tbody');
-    tableEl.appendChild(tableBody);
+    this.tableEl.appendChild(tableBody);
     this.data.forEach(function (holding) {
       var holdingView = new HoldingViewConstructor(holding, this.fields);
       tableBody.appendChild(holdingView.render());
     }.bind(this))
 
-    return tableEl;
+    return this.tableEl;
   }
   this.renderHeader = function () {
     var tableHeadCont = ce('thead');
@@ -64,6 +65,14 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
       return field.heading.replace(removeKeys, "").trim() === requestedHeading;
     })
     heading.isEditable = true;
+  }
+
+  this.addRowClick = function (callback) {
+    this.tableEl.childNodes[1].onclick = function (e) {
+      var elementToUse = getParentNodeOfType(e.target, "tr");
+      var position = Array.prototype.indexOf.call(this.tableEl.childNodes[1].childNodes, elementToUse);
+      callback(this.data[position].epic.toLowerCase())
+    }.bind(this);
   }
 }
 module.exports = PortfolioView;

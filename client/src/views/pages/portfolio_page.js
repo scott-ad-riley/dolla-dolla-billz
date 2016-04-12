@@ -17,6 +17,9 @@ module.exports = function (data, refreshCache, router) {
   tableBox.classList.add("pure-u-3-5");
   tableBox.appendChild(totalValueText);
   tableBox.appendChild(portfolioView.render());
+  portfolioView.addRowClick(function (epic) {
+    router.loadNewPage("/portfolio/" + epic);
+  });
   container.appendChild(tableBox);
   container.appendChild(foo.cloneNode());
 }

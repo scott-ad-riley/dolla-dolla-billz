@@ -9,7 +9,6 @@ Router.prototype.route = function (route) {
 }
 
 Router.prototype.routeWithPath = function (path) {
-  console.log(path);
   this.currentPath = path;
   this.dynamicValue = "";
   // we need to loop over the input path first
@@ -55,6 +54,7 @@ Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
   if (route.dataPrefix || route.dataPath) {
     this.fetchData(route, function (data) {
+        console.log("callback in fetchdata")
         addToHistory(route, this.currentPath);
       }.bind(this), false)
   } else {
@@ -80,19 +80,20 @@ Router.prototype.fetchData = function (route, callback, disableCache, requestedP
   if (route.data && !disableCache) {
     route.onLoad(route.data, this.refreshCache.bind(this, route), this);
     if (callback) callback(route.data, this.fetchDataNoCache);
+  } else {
+    var url = route.dataPath || route.dataPrefix + this.currentPath;
+    var request = new XMLHttpRequest();
+    request.open("GET", url);
+    request.onload = function () {
+      if (request.status === 200) {
+        var result = JSON.parse(request.responseText);
+        route.onLoad(result, this.refreshCache.bind(this, route), this);
+        route.data = result;
+        if (callback) callback(result, this.fetchDataNoCache);
+      }
+    }.bind(this)
+    request.send();
   }
-  var url = route.dataPath || route.dataPrefix + this.currentPath;
-  var request = new XMLHttpRequest();
-  request.open("GET", url);
-  request.onload = function () {
-    if (request.status === 200) {
-      var result = JSON.parse(request.responseText);
-      route.onLoad(result, this.refreshCache.bind(this, route), this);
-      route.data = result;
-      if (callback) callback(result, this.fetchDataNoCache);
-    }
-  }.bind(this)
-  request.send();
 }
 
 Router.prototype.refreshCache = function (route) {
@@ -110,10 +111,12 @@ var formatRouteToSave = function (route, currentPath) {
 }
 
 var replaceInHistory = function (route, currentPath) {
+  console.log("replaced: ", route)
   window.history.replaceState(formatRouteToSave(route, currentPath), route.heading, currentPath)
 }
 
 var addToHistory = function (route, currentPath) {
+  console.log("added: ", route)
   window.history.pushState(formatRouteToSave(route, currentPath), route.heading, currentPath);
 }
 
