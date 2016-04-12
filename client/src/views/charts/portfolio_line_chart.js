@@ -1,15 +1,14 @@
 var Highcharts = require('highcharts');
 
-var LineChart = function(container, holdings){
+var LineChart = function(container, data, title){
 
-  var title = "The Title";
   var type = "line";
   var data = [];
 
-  for (var i = holdings.length - 1; i >= 0; i--) {
+  for (var i = data.length - 1; i >= 0; i--) {
       var objToPush = {
-        name: holdings[i].name,
-        data:holdings[i].pastCloseOfDayPrices 
+        name: data[i].name,
+        data: data[i].pastCloseOfDayPrices 
       };
       data.push(objToPush);
   }

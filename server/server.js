@@ -45,8 +45,17 @@ app.get('/api/portfolio', function(req, res) {
 });
 
 app.get('/api/portfolio/:epic', function (req, res) {
-  res.json({something: "here"})
-  res.status(200).end()
+  MongoClient.connect(url, function(err, db) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    var portfolio = db.collection('portfolio');
+    portfolio.find({epic: req.params.epic.toUpperCase()}).toArray(function(err, docs) {
+      res.json(docs[0]);
+      db.close();
+    });
+  });
 })
 
 
