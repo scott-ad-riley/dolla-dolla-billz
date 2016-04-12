@@ -67,7 +67,8 @@ window.onload = function() {
     setActiveLink(path);
   };
   header.appendChild(navigation.render());
-  router.loadInitialPage(window.location.pathname)
+  router.loadInitialPage(window.location.pathname);
+  navigation.setActiveLink(window.location.pathname);
   window.onpopstate = function () {
     router.loadExistingPage(history.state)
   };
