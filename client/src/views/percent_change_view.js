@@ -4,14 +4,14 @@ var formatPercentChange = function (holding) {
   var percentChange = holding.change();
   if (percentChange > 0) {
     span.innerHTML = "&#x25B2;" + percentChange + "%"; // Gives me the ▲ character
-    span.classList.add('green')
+    span.classList.add('green');
   } else if (percentChange < 0) {
     span.innerHTML = "&#x25BC;" + percentChange + "%"; // Gives me the ▼ character
-    span.classList.add('red')
+    span.classList.add('red');
   } else {
     span.innerHTML = percentChange;
   }
-  return span
+  return span;
 }
 
 module.exports = formatPercentChange;

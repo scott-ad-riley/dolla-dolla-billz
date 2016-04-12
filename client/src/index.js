@@ -26,7 +26,7 @@ router.route({
     lineGraphBox.classList.add("pure-u-12-24");
     container.appendChild(lineGraphBox);
     var lineGraph = new LineChart(lineGraphBox, userPortfolio.holdings);
-    var portfolioView = new PortfolioView(userPortfolio.holdings, HoldingView);
+    var portfolioView = new PortfolioView(userPortfolio, HoldingView);
     var tableBox = ce('div');
     tableBox.classList.add("pure-u-12-24");
     tableBox.appendChild(portfolioView.render());
