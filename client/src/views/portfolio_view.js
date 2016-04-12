@@ -1,5 +1,6 @@
 require('short-dom')();
 var formatPercent = require("./percent_change_view.js");
+var HoldingView = require('./holding_view.js');
 var defaultFields = [
   // { heading:"Name" },
   { heading:"Epic" },
