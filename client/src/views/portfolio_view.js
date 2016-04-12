@@ -17,7 +17,7 @@ var defaultFields = [
     heading:"Value",
     value: function (holding) {
       var span = ce('span');
-      span.innerText = "£" + (holding.value() / 100).toFixed(2)
+      span.innerText = "£" + (holding.value() / 100).toFixed(2);
       return span;
     }
   },
@@ -40,12 +40,11 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
     var tableBody = ce('tbody');
     tableEl.appendChild(tableBody);
     this.data.forEach(function (holding) {
-      var holdingView = new HoldingViewConstructor(holding, this.fields);
-      tableBody.appendChild(holdingView.render());
-    }.bind(this))
-
+    var holdingView = new HoldingView(holding, this.fields);
+      tableEl.appendChild(holdingView.render());
+    }.bind(this));
     return tableEl;
-  }
+  };
   this.renderHeader = function () {
     var tableHeadCont = ce('thead');
     var tableHeadingRow = ce("tr");
@@ -66,4 +65,5 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
     heading.isEditable = true;
   }
 }
+
 module.exports = PortfolioView;

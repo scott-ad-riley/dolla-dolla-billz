@@ -13,6 +13,7 @@
     "camelcase": "^2.1.1",
     "chai": "^3.5.0",
     "highcharts": "^4.2.3",
+    "list.js": "^1.2.0",
     "lodash": "^4.8.2",
     "mocha": "^2.4.5",
     "short-dom": "^1.2.1",

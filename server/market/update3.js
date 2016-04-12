@@ -8,8 +8,8 @@ var update3 = function(stockArray) {
         if(err) {
             console.log(err);
             return;
-        };
-        console.log(stockArray.length)
+        }
+        console.log(stockArray.length);
         var market = db.collection('market');
         
         market.drop(function() {

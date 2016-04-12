@@ -12,6 +12,7 @@ var formatPercentChange = function (holding) {
     span.innerHTML = percentChange;
   }
   return span;
-}
+};
+
 
 module.exports = formatPercentChange;

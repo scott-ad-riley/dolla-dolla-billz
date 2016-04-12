@@ -3,13 +3,12 @@ var Navigation = function (app) {
   this.pages = app;
   this.onLinkClicked = null;
   this.nav = ce('nav')
-}
+};
 
 Navigation.prototype.render = function () {
   // var logo = this.logo();
   // nav.appendChild(this.logo());
   var ul = ce('ul');
-  // ul.classList.add('menu-right')
   this.pages.forEach(function (page) {
     var li = ce('li');
     var link = ce('a');
@@ -39,6 +38,7 @@ Navigation.prototype.setActiveLink = function (path) {
   links[position].childNodes[0].style.borderBottom = "2px solid white";
   links[position].childNodes[0].style.marginBottom = "-1px";
 }
+
 
 
 // Navigation.prototype.logo = function () {
