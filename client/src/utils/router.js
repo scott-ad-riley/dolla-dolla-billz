@@ -10,7 +10,6 @@ Router.prototype.route = function (route) {
 
 Router.prototype.routeWithPath = function (path) {
   this.currentPath = path;
-  console.log("this.currentPath: ", path)
   // we need to loop over the input path first
   var newPath = convertPathToArray(path);
   // first match
@@ -103,7 +102,6 @@ var formatRouteToSave = function (route, currentPath) {
 }
 
 var replaceInHistory = function (route, currentPath) {
-  console.log("called replace state with:", arguments)
   window.history.replaceState(formatRouteToSave(route, currentPath), route.heading, currentPath)
 }
 

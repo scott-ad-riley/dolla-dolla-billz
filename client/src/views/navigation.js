@@ -29,7 +29,6 @@ Navigation.prototype.render = function () {
 Navigation.prototype.setActiveLink = function (path) {
   var pathVars = convertPathToArray(path);
   var pathToUse = (pathVars.length > 1) ? "/" + pathVars[0] : path;
-  console.log("pathToUse", pathToUse)
   var links = this.nav.childNodes[0].childNodes;
   var position;
   this.pages
