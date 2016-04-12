@@ -1,5 +1,6 @@
+require('short-dom')();
 var HoldingView = require('./holding_view.js');
-
+var formatPercent = require("./percent_change_view.js");
 var defaultFields = [
   { heading:"Name" },
   { heading:"Epic" },
@@ -10,14 +11,14 @@ var defaultFields = [
   {
     heading:"Value",
     value: function (holding) {
-      return "£" + (holding.value() / 100).toFixed(2);
+      var span = ce('span');
+      span.innerText = "£" + (holding.value() / 100).toFixed(2)
+      return span;
     }
   },
   {
     heading:"Change",
-    value: function (holding) {
-      return holding.change() + "%";
-    }
+    value: formatPercent
   }
 ];
 

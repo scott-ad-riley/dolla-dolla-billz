@@ -27,7 +27,7 @@ router.route({
     tableBox.appendChild(portfolioView.render());
     container.appendChild(tableBox);
     var totalValueText = document.createElement('p');
-    totalValueText.innerHTML = 'Total Value: £' +userPortfolio.totalValue().toLocaleString();
+    totalValueText.innerHTML = 'Total Value: £' + userPortfolio.value().toLocaleString();
     tableBox.appendChild(totalValueText);
   }
 });

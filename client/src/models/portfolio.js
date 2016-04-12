@@ -22,7 +22,6 @@ Portfolio.prototype.addUpdateCallback = function (callback) {
 };
 
 Portfolio.prototype.change = function (distance) {
-  // (Price Sold - Previous Price)/(Previous Price)
   var distance = distance || 1;
   var previousValue = this.holdings.reduce(function (mem, holding) {
     return mem + (holding.pastCloseOfDayPrices[(holding.pastCloseOfDayPrices.length - (distance))] * holding.quantity)
@@ -30,15 +29,5 @@ Portfolio.prototype.change = function (distance) {
   var difference = this.value() - previousValue;
   return ((difference / previousValue) * 100).toFixed(1) * -1;
 }
-
-Portfolio.prototype.totalValue = function() {
-  var totalValue = 0;
-  for (var i = this.holdings.length - 1; i >= 0; i--) {
-    totalValue += this.holdings[i].value();
-  };
-  return totalValue;
-};
-
-module.exports = Portfolio;
 
 module.exports = Portfolio;
