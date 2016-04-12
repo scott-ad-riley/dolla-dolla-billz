@@ -33,7 +33,7 @@ var HoldingView = function (holdingObj, fields) {
     td.innerText = "";
     td.style.width = this.cellWidth();
     var newContent = (typeof field.value === "function") ? field.value(holdingObj) : holdingObj[camelCase(field.heading)];
-    if (this.getCellContentsAsText(newContent) !== previousContent && isUpdate) {
+    if (this.getCellContentsAsText(newContent) !== previousContent && isUpdate && editedCellIndex !== cellIndex) {
       td.classList.add("updated");
       setTimeout(function () {
         td.classList.remove('updated');
