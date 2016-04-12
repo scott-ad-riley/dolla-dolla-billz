@@ -19,14 +19,14 @@ var router = new Router();
 router.route({
   path: "/portfolio",
   heading: "My Portfolio",
-  dataPath: "/api/portfolio",
+  dataPrefix: "/api",
   defaultRoute: true,
   onLoad: renderPortfolioPage
 });
 
 router.route({
   path: "/portfolio/:epic",
-  dataPath: "/api/portfolio/:epic",
+  dataPrefix: "/api",
   onLoad: function (data, refreshCache, params) {
     
   }
@@ -51,7 +51,7 @@ router.route({
 router.route({
   path: "/queries",
   heading: "Queries",
-  dataPath: "/api/portfolio", 
+  dataPrefix: "/api",
   onLoad: function (data, refreshCache) {
     container.innerHTML = "";
     var DynamicPortfolio = new PortfolioView(new Portfolio(data, Holding), DynamicHoldingView);

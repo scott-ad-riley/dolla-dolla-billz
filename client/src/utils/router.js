@@ -1,35 +1,29 @@
-var matchRoute = require('./route_matcher.js');
 var Router = function () {
   this.routes = [];
+  this.currentPath = "";
 }
 
 Router.prototype.route = function (route) {
-  // var pathVars = convertPathToArray(route.path);
-  // route.isDynamic = pathVars.reduce(hasColon, false);
   this.routes.push(route);
 }
 
-// when a request comes in, what do we need to do to it to convert it to the format we want/how do we step through the stages to return it
-
-// if we create a route match function that takes in a requestedPath, and returns the route object
-
 Router.prototype.routeWithPath = function (path) {
-
+  this.currentRoute = path;
   // we need to loop over the input path first
   var newPath = convertPathToArray(path);
   // first match
   var possibleRoutes = this.routes.filter(function (route) {
-    return route.pathVars[0] === newPath[0];
+    return convertPathToArray(route.path)[1] === newPath[0];
   });
   if (possibleRoutes.length === 0) { // no paths found
     return this.getDefaultRoute();
   } else if (possibleRoutes.length === 1) { // just one path matches
     return possibleRoutes[0];
   } else { // multiple matches (look at dynamic routes)
-    var foo =  possibleRoutes.find(function (route) {
+    var result =  possibleRoutes.find(function (route) {
       return (route.pathVars.length === newPath.length);
-    })
-    return foo;
+    });
+    return result;
   }
 }
 
@@ -41,7 +35,7 @@ Router.prototype.getDefaultRoute = function () {
 
 Router.prototype.loadInitialPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
-  if (route.dataPath) {
+  if (route.dataPrefix) {
     this.fetchData(route, function (data) {
         replaceInHistory(route)
       })
@@ -53,7 +47,7 @@ Router.prototype.loadInitialPage = function (requestedPath) {
 
 Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
-  if (route.dataPath) {
+  if (route.dataPrefix) {
     this.fetchData(route, function (data) {
         addToHistory(route)
       }, false)
@@ -65,7 +59,7 @@ Router.prototype.loadNewPage = function (requestedPath) {
 
 Router.prototype.loadExistingPage = function (routeObjFromHistory) {
   var route = this.routeWithPath(routeObjFromHistory.path);
-  if (route.dataPath) {
+  if (route.dataPrefix) {
     this.fetchData(route, null, false)
   } else {
     route.onLoad();
@@ -82,7 +76,7 @@ Router.prototype.fetchData = function (route, callback, disableCache, requestedP
     if (callback) callback(route.data, this.fetchDataNoCache);
   }
 
-  var url = route.dataPath;
+  var url = route.dataPrefix + this.currentRoute;
   var request = new XMLHttpRequest();
   request.open("GET", url);
   request.onload = function () {
