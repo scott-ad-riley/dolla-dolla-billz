@@ -4,7 +4,9 @@ var path = require('path');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var marketUpdate = require('./market/app.js');
 var url = 'mongodb://localhost:27017/dolla_dolla_db';
+
 
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
@@ -71,9 +73,24 @@ app.post('/api/portfolio', function(req, res) {
   db.close(); 
 });
 
-// app.get("/api/market", function (req, res) {
-//   res.json({"dataFor": "the market"});
-// });
+app.get("/api/market", function (req, res) {
+  MongoClient.connect(url, function(err, db) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    var market = db.collection('market');
+    market.find({}).toArray(function(err, docs) {
+      res.json(docs);
+      db.close();
+    });
+  });
+});
+
+app.get("/api/market/update", function (req, res) {
+  marketUpdate();
+  res.send('Updated Market');
+});
 
 // app.get("/api/about", function (req, res) {
 //   res.json({"dataFor": "the about"});
