@@ -1,3 +1,4 @@
+var convertPathToArray = require('../utils/path_to_array.js');
 require('short-dom')();
 var Navigation = function (app) {
   this.pages = app;
@@ -26,13 +27,20 @@ Navigation.prototype.render = function () {
 }
 
 Navigation.prototype.setActiveLink = function (path) {
+  var pathVars = convertPathToArray(path);
+  var pathToUse = (pathVars.length > 1) ? "/" + pathVars[0] : path;
+  console.log("pathToUse", pathToUse)
   var links = this.nav.childNodes[0].childNodes;
   var position;
-  this.pages.forEach(function (route, index) {
-    if (route.path === path) {
-      position = index;
-    }
-  })
+  this.pages
+    .filter(function (page) {
+      return page.heading
+    })
+    .forEach(function (route, index) {
+      if (route.path === pathToUse) {
+        position = index;
+      }
+    })
   Array.prototype.forEach.call(links, function (link) {
     link.childNodes[0].style.border = "none";
     link.childNodes[0].style.marginBottom = "0";

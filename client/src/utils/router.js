@@ -1,3 +1,4 @@
+var convertPathToArray = require('./path_to_array.js');
 var Router = function () {
   this.routes = [];
   this.currentPath = "";
@@ -8,20 +9,24 @@ Router.prototype.route = function (route) {
 }
 
 Router.prototype.routeWithPath = function (path) {
-  this.currentRoute = path;
+  this.currentPath = path;
+  console.log("this.currentPath: ", path)
   // we need to loop over the input path first
   var newPath = convertPathToArray(path);
   // first match
   var possibleRoutes = this.routes.filter(function (route) {
-    return convertPathToArray(route.path)[1] === newPath[0];
+    return convertPathToArray(route.path)[0] === newPath[0];
   });
   if (possibleRoutes.length === 0) { // no paths found
-    return this.getDefaultRoute();
+    var defaultRoute = this.getDefaultRoute();
+    this.currentPath = defaultRoute.path;
+    console.log("this.currentPath is actually: ", defaultRoute.path);
+    return defaultRoute;
   } else if (possibleRoutes.length === 1) { // just one path matches
     return possibleRoutes[0];
   } else { // multiple matches (look at dynamic routes)
     var result =  possibleRoutes.find(function (route) {
-      return (route.pathVars.length === newPath.length);
+      return (convertPathToArray(route.path).length === newPath.length);
     });
     return result;
   }
@@ -37,10 +42,10 @@ Router.prototype.loadInitialPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
   if (route.dataPrefix) {
     this.fetchData(route, function (data) {
-        replaceInHistory(route)
-      })
+        replaceInHistory(route, this.currentPath);
+      }.bind(this))
   } else {
-    replaceInHistory(route);
+    replaceInHistory(route, this.currentPath);
     route.onLoad();
   }
 }
@@ -49,16 +54,16 @@ Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
   if (route.dataPrefix) {
     this.fetchData(route, function (data) {
-        addToHistory(route)
-      }, false)
+        addToHistory(route, this.currentPath);
+      }.bind(this), false)
   } else {
-    addToHistory(route);
+    addToHistory(route, this.currentPath);
     route.onLoad();
   }
 }
 
 Router.prototype.loadExistingPage = function (routeObjFromHistory) {
-  var route = this.routeWithPath(routeObjFromHistory.path);
+  var route = this.routeWithPath(routeObjFromHistory.url);
   if (route.dataPrefix) {
     this.fetchData(route, null, false)
   } else {
@@ -76,7 +81,7 @@ Router.prototype.fetchData = function (route, callback, disableCache, requestedP
     if (callback) callback(route.data, this.fetchDataNoCache);
   }
 
-  var url = route.dataPrefix + this.currentRoute;
+  var url = route.dataPrefix + this.currentPath;
   var request = new XMLHttpRequest();
   request.open("GET", url);
   request.onload = function () {
@@ -90,25 +95,21 @@ Router.prototype.fetchData = function (route, callback, disableCache, requestedP
   request.send();
 }
 
-var formatRouteToSave = function (route) {
+var formatRouteToSave = function (route, currentPath) {
   return {
     path: route.path,
-    data: route.data || null
+    data: route.data || null,
+    url: currentPath
   }
 }
 
-var replaceInHistory = function (route) {
-  window.history.replaceState(formatRouteToSave(route), route.heading, route.path)
+var replaceInHistory = function (route, currentPath) {
+  console.log("called replace state with:", arguments)
+  window.history.replaceState(formatRouteToSave(route, currentPath), route.heading, currentPath)
 }
 
-var addToHistory = function (route) {
-  window.history.pushState(formatRouteToSave(route), route.heading, route.path);
-}
-
-var convertPathToArray = function (path) {
-  var result = path.split("/");
-  result.shift()
-  return result;
+var addToHistory = function (route, currentPath) {
+  window.history.pushState(formatRouteToSave(route, currentPath), route.heading, currentPath);
 }
 
 var replaceDynamicValue = function (requestedPath, matchedPath) {

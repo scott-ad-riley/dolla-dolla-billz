@@ -28,7 +28,7 @@ router.route({
   path: "/portfolio/:epic",
   dataPrefix: "/api",
   onLoad: function (data, refreshCache, params) {
-    
+    container.innerHTML = "This is the inner portfolio page";
   }
 })
 
@@ -65,7 +65,7 @@ router.route({
   }
 });
 
-window.onload = function() {
+window.onload = function () {
   var navigation = new Navigation(router.routes);
   var header = gid('header');
   var container = gid('container');
@@ -76,8 +76,10 @@ window.onload = function() {
   };
   header.appendChild(navigation.render());
   router.loadInitialPage(window.location.pathname);
-  navigation.setActiveLink(window.location.pathname);
+  navigation.setActiveLink(router.currentPath);
   window.onpopstate = function () {
     router.loadExistingPage(history.state)
+    console.log(history.state.url);
+    navigation.setActiveLink(history.state.url)
   };
 };
