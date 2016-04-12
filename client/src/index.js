@@ -17,7 +17,7 @@ var DynamicHoldingView = require('./views/queries/dynamic_holding_view.js')
 
 var router = new Router();
 router.route({
-  path: "/portfolio",
+  path: "/portfolio"  ,
   heading: "My Portfolio",
   dataPrefix: "/api",
   defaultRoute: true,
@@ -27,7 +27,7 @@ router.route({
 router.route({
   path: "/portfolio/:epic",
   dataPrefix: "/api",
-  onLoad: function (data, refreshCache, params) {
+  onLoad: function (data, refreshCache) {
     container.innerHTML = "This is the inner portfolio page";
   }
 })
@@ -51,7 +51,7 @@ router.route({
 router.route({
   path: "/queries",
   heading: "Queries",
-  dataPrefix: "/api",
+  dataPath: "/api/portfolio",
   onLoad: function (data, refreshCache) {
     container.innerHTML = "";
     var DynamicPortfolio = new PortfolioView(new Portfolio(data, Holding), DynamicHoldingView);
@@ -69,17 +69,19 @@ window.onload = function () {
   var navigation = new Navigation(router.routes);
   var header = gid('header');
   var container = gid('container');
+
   navigation.onLinkClicked = function (setActiveLink, path, event) {
     event.preventDefault();
     router.loadNewPage(path);
     setActiveLink(path);
   };
+
   header.appendChild(navigation.render());
   router.loadInitialPage(window.location.pathname);
   navigation.setActiveLink(router.currentPath);
+
   window.onpopstate = function () {
     router.loadExistingPage(history.state)
-    console.log(history.state.url);
     navigation.setActiveLink(history.state.url)
   };
 };

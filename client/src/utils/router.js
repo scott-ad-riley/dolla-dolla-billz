@@ -9,7 +9,9 @@ Router.prototype.route = function (route) {
 }
 
 Router.prototype.routeWithPath = function (path) {
+  console.log(path);
   this.currentPath = path;
+  this.dynamicValue = "";
   // we need to loop over the input path first
   var newPath = convertPathToArray(path);
   // first match
@@ -17,11 +19,11 @@ Router.prototype.routeWithPath = function (path) {
     return convertPathToArray(route.path)[0] === newPath[0];
   });
   if (possibleRoutes.length === 0) { // no paths found
-    return defaultRoute;
+    return this.getDefaultRoute();
   } else if (possibleRoutes.length === 1) { // just one path matches
     return possibleRoutes[0];
   } else { // multiple matches (look at dynamic routes)
-    var result =  possibleRoutes.find(function (route) {
+    var result = possibleRoutes.find(function (route) {
       return (convertPathToArray(route.path).length === newPath.length);
     });
     return result;
@@ -31,7 +33,7 @@ Router.prototype.routeWithPath = function (path) {
 Router.prototype.getDefaultRoute = function () {
   return this.routes.find(function (route) {
     if (route.defaultRoute) {
-      this.currentPath(route.path);
+      this.currentPath = route.path;
       return route.defaultRoute;
     }
   }.bind(this))
@@ -39,7 +41,7 @@ Router.prototype.getDefaultRoute = function () {
 
 Router.prototype.loadInitialPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
-  if (route.dataPrefix) {
+  if (route.dataPrefix || route.dataPath) {
     this.fetchData(route, function (data) {
         replaceInHistory(route, this.currentPath);
       }.bind(this))
@@ -51,7 +53,7 @@ Router.prototype.loadInitialPage = function (requestedPath) {
 
 Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
-  if (route.dataPrefix) {
+  if (route.dataPrefix || route.dataPath) {
     this.fetchData(route, function (data) {
         addToHistory(route, this.currentPath);
       }.bind(this), false)
@@ -63,7 +65,7 @@ Router.prototype.loadNewPage = function (requestedPath) {
 
 Router.prototype.loadExistingPage = function (routeObjFromHistory) {
   var route = this.routeWithPath(routeObjFromHistory.url);
-  if (route.dataPrefix) {
+  if (route.dataPrefix || route.dataPath) {
     this.fetchData(route, null, false)
   } else {
     route.onLoad();
@@ -75,11 +77,11 @@ Router.prototype.fetchDataNoCache = function (route) {
 }
 
 Router.prototype.fetchData = function (route, callback, disableCache, requestedPath) {
-  if (route.data && !disableCache && !route.isDynamic) {
+  if (route.data && !disableCache) {
     route.onLoad(route.data);
     if (callback) callback(route.data, this.fetchDataNoCache);
   }
-  var url = route.dataPrefix + this.currentPath;
+  var url = route.dataPath || route.dataPrefix + this.currentPath;
   var request = new XMLHttpRequest();
   request.open("GET", url);
   request.onload = function () {
