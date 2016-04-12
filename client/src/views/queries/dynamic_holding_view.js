@@ -26,6 +26,7 @@ var HoldingView = function (holdingObj, fields) {
       td.appendChild(field.value(holdingObj));
     } else {
       td.innerHTML = holdingObj[camelCase(field.heading)];
+      console.log(holdingObj[camelCase(field.heading)]);
     }
     if (field.isEditable) {
       td.contentEditable = true;

@@ -11,7 +11,7 @@ var defaultFields = [
   { heading:"Price (p)",
     value: function (holding) {
       var span = ce('span');
-      span.innerText = Math.round((holding.price + 0.00001) * 100) / 100; // thanks stackoverflow
+      span.innerText = Math.round(holding.price); // thanks stackoverflow
       return span;
     }
    },

@@ -25,6 +25,7 @@ Holding.prototype.dynamicPrice = function (newValue) {
 }
 
 Holding.prototype.dynamicValue = function (newValue) {
+  console.log("nothing happened here!")
   this.price = parseInt(newValue.replace("£", "") * 100) / this.quantity;
   return this;
 }
@@ -35,6 +36,7 @@ Holding.prototype.dynamicQuantity = function (newValue) {
 }
 
 Holding.prototype.dynamicChange = function (newValue) {
+  console.log("nothing happening here!")
   var stripArrowsAndPercent = /[\u25B2\u25BC%]/g
   var percentValue = parseFloat(newValue.replace(stripArrowsAndPercent, "")) / 100;
   var previousPrice = this.pastCloseOfDayPrices[this.pastCloseOfDayPrices.length - 1];
