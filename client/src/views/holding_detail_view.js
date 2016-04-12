@@ -1,8 +1,14 @@
 require('short-dom')();
-var Holding = require('../models/holding.js');
+var LineChart = require('./charts/portfolio_line_chart.js');
 
-module.exports = function (data, refreshCache, router) {
-
-  var holding = new Holding(data);
-  console.log(holding);
+var HoldingDetailView = function (holding) {
+  this.holding = holding;
 }
+
+HoldingDetailView.prototype.render = function () {
+  var box = ce('div');
+  new LineChart(box, this.holding, this.holding.name);
+  return box;
+}
+
+module.exports = HoldingDetailView;

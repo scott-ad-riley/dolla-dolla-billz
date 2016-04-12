@@ -12,7 +12,7 @@ var LineChart = require('./views/charts/portfolio_line_chart.js');
 var PieChart = require('./views/charts/portfolio_pie_chart.js');
 // Page Views
 var renderPortfolioPage = require('./views/pages/portfolio_page.js');
-var renderHoldingDetail = require('./views/holding_detail_view.js');
+var renderHoldingPage = require('./views/pages/holding_page.js');
 // User Query Views
 var DynamicHoldingView = require('./views/queries/dynamic_holding_view.js')
 
@@ -27,8 +27,8 @@ router.route({
 
 router.route({
   path: "/portfolio/:epic",
-  dataPrefix: "/api",
-  onLoad: renderHoldingDetail
+  dataPath: "/api/portfolio",
+  onLoad: renderHoldingPage
 })
 
 router.route({

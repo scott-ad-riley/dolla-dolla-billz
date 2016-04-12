@@ -54,7 +54,6 @@ Router.prototype.loadNewPage = function (requestedPath) {
   var route = this.routeWithPath(requestedPath);
   if (route.dataPrefix || route.dataPath) {
     this.fetchData(route, function (data) {
-        console.log("callback in fetchdata")
         addToHistory(route, this.currentPath);
       }.bind(this), false)
   } else {
@@ -111,12 +110,10 @@ var formatRouteToSave = function (route, currentPath) {
 }
 
 var replaceInHistory = function (route, currentPath) {
-  console.log("replaced: ", route)
   window.history.replaceState(formatRouteToSave(route, currentPath), route.heading, currentPath)
 }
 
 var addToHistory = function (route, currentPath) {
-  console.log("added: ", route)
   window.history.pushState(formatRouteToSave(route, currentPath), route.heading, currentPath);
 }
 
