@@ -19,7 +19,7 @@ var renderMarketPage = function(data, refreshCache) {
     var stocksList = document.createElement('select');
     for (var i = data.length - 1; i >= 0; i--) {
       var option = document.createElement('option');
-      option.value = data[i].symbol;
+      option.value = data[i].epic;
       option.innerText = data[i].name;
       stocksList.appendChild(option);
     }
@@ -41,7 +41,7 @@ var renderMarketPage = function(data, refreshCache) {
       var selected = stocksList.value;
 
       function findStock(stock) {
-        return stock.symbol === selected;
+        return stock.epic === selected;
       }
       stockSelected = data.find(findStock); 
       var stockLineGraph = new StockLineChart(stockChart, stockSelected);

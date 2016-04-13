@@ -59,23 +59,22 @@ app.get('/api/portfolio/:epic', function (req, res) {
 
 
 app.post('/api/portfolio', function(req, res) {
-  console.log('body', req.body);
-    MongoClient.connect(url, function(err, db) {
-      if(err) {
-        console.log(err);
-        return;
-      }
-      var portfolio = db.collection('portfolio');
-      portfolio.insert({
-        "name": req.body.name,
-        "epic": req.body.epic,
-        "price": req.body.price,
-        "quantity": req.body.quantity,
-        "buyPrice": req.body.buyPrice,
-        "pastCloseOfDayPrices": req.body.pastCloseOfDayPrices,
-        "buyDate": req.body.buyDate
-      });
+  MongoClient.connect(url, function(err, db) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    var portfolio = db.collection('portfolio');
+    portfolio.insert({
+      "name": req.body.name,
+      "epic": req.body.epic,
+      "price": req.body.price,
+      "quantity": req.body.quantity,
+      "buyPrice": req.body.buyPrice,
+      "pastCloseOfDayPrices": req.body.pastCloseOfDayPrices,
+      "buyDate": req.body.buyDate
     });
+  });
   res.send('post completed');
   res.status(200).end();
   db.close(); 

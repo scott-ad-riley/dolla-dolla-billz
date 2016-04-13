@@ -7,7 +7,7 @@ var HoldingDetailView = function (holding) {
 
 HoldingDetailView.prototype.render = function () {
   var box = ce('div');
-  new LineChart(box, this.holding, this.holding.name);
+  new LineChart(box, this.holding, this.holding.name, "pastCloseOfDayPrices");
   return box;
 }
 
