@@ -1,11 +1,11 @@
 var Highcharts = require('highcharts');
 
-var LineChart = function(container, data, title){
+var LineChart = function(container, data, title, keyToUse){
   this.title = title;
   this.type = "line";
-  this.handleData(data);
+  this.handleData(data, keyToUse);
   this.container = container;
-
+  console.log("me!")
   new Highcharts.Chart({
     chart: {
       renderTo: this.container,
@@ -15,7 +15,7 @@ var LineChart = function(container, data, title){
       text: this.title,
     },
     series: this.data,
-    xAxis: {categories: ['1','2','3','4','5','6','7'] },
+    xAxis: { categories: ['7','6','5','4','3','2','1'] },
     yAxis: {
       labels: {
         align: 'left',
@@ -28,18 +28,18 @@ var LineChart = function(container, data, title){
 
 };
 
-LineChart.prototype.handleData = function (data){
+LineChart.prototype.handleData = function (data, keyToUse){
   if (Array.isArray(data)) {
     this.data = data.map(function (holding) {
       return {
           name: holding[i].name,
-          data: holding[i].pastCloseOfDayPrices 
+          data: holding[i][keyToUse] 
         }
     });
   } else {
     this.data = [{
               name: data.name,
-              data: data.pastCloseOfDayPrices 
+              data: data[keyToUse] 
             }];
   }
 
