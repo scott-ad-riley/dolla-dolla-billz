@@ -23,10 +23,24 @@ HoldingDetailView.prototype.renderForm = function () {
   this.input.value = "0";
   this.input.min = "0";
   this.input.step = "10";
+  var valueDisplay = ce('div');
+  valueDisplay.innerText = "";
+  this.input.oninput = function () {
+    if (this.input.value !== "0") {
+      valueDisplay.innerText = "Worth: " + this.calculatePrice();
+    } else {
+     valueDisplay.innerText = "";
+    }
+  }.bind(this);
   container.appendChild(this.input);
   container.appendChild(this.renderSellButton());
   container.appendChild(this.renderBuyButton());
+  container.appendChild(valueDisplay);
   return container
+}
+
+HoldingDetailView.prototype.calculatePrice = function () {
+  return "£" + (this.holding.price * this.input.value) / 100;
 }
 
 HoldingDetailView.prototype.renderSellButton = function () {
