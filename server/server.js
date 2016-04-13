@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-var marketUpdate = require('./market/app.js');
+var marketUpdate = require('./market_api/fetch_and_import_market.js');
 var url = 'mongodb://localhost:27017/dolla_dolla_db';
 
 app.use(express.static('../client/build'));
