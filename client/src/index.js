@@ -91,6 +91,9 @@ router.route({
       stockTable.classList.add("pure-table")
 
       Object.keys(stockToChart).forEach(function(key,index) {
+        if(key === '_id' || key === 'pastCloseOfDayPrices' || key === 'lastUpdated' || key === 'utctime' ){
+          return;
+        }
         var tr = document.createElement('tr');
         var td = document.createElement('td');
         var td2 = document.createElement('td');
