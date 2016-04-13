@@ -32,6 +32,11 @@
   margin-top: 0;
 }
 
+#stock-table {
+/*  width: 100%;
+  table-layout: fixed;*/
+}
+
 td {
   transition: background-color 0.2s;
 }
