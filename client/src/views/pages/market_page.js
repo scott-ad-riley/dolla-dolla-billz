@@ -1,6 +1,7 @@
 var StockLineChart = require('../charts/stock_line_chart.js');
 
 var renderMarketPage = function(data, refreshCache) {
+    var stockSelected;
     container.innerHTML = "";
     var left = document.createElement('div');
     left.classList.add("pure-u-12-24");    
@@ -42,20 +43,18 @@ var renderMarketPage = function(data, refreshCache) {
       function findStock(stock) {
         return stock.epic === selected;
       }
-      var stockToChart = data.find(findStock); 
-      var stockLineGraph = new StockLineChart(stockChart, stockToChart);
+      stockSelected = data.find(findStock); 
+      var stockLineGraph = new StockLineChart(stockChart, stockSelected);
 
       while (tableContainer.firstChild ) {
           tableContainer.removeChild(tableContainer.firstChild);
       }
       var stockTable = document.createElement('table');
       tableContainer.appendChild(stockTable);
-      console.log(tableContainer)
       stockTable.id = "stock-table";
       stockTable.classList.add("pure-table")
 
-  console.log(stockToChart)
-      Object.keys(stockToChart).forEach(function(key,index) {
+      Object.keys(stockSelected).forEach(function(key,index) {
         if(key === '_id' || key === 'pastCloseOfDayPrices' || key === 'lastUpdated' || key === 'pastCloseOfDayPrices' ){
           return;
         }
@@ -63,13 +62,29 @@ var renderMarketPage = function(data, refreshCache) {
         var td = document.createElement('td');
         var td2 = document.createElement('td');
         td.innerText = key;
-        td2.innerText = stockToChart[key];
+        td2.innerText = stockSelected[key];
         tr.appendChild(td);
         tr.appendChild(td2);
         stockTable.appendChild(tr);
       });
     }
     stocksList.onchange();
+
+    var buyForm = document.createElement('form');
+    left.appendChild(buyForm);
+
+    var quantityBuy = document.createElement('input');
+    quantityBuy.type = 'number';
+    buyForm.appendChild(quantityBuy);
+
+    var buyButton = document.createElement('button');
+    buyButton.innerText = "BuyBuyBuy";
+    buyForm.appendChild(buyButton);
+
+    buyForm.onsubmit = function(event) {
+      event.preventDefault();
+      console.log(stockSelected.name);
+    }
   };
 
   module.exports = renderMarketPage;
