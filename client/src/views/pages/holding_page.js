@@ -12,7 +12,7 @@ module.exports = function (data, refreshCache, router) {
   var holdingData = data.find(function (holdingData) {
     return holdingData.epic === epic.toUpperCase();
   });
-  var holdingDetailView = new HoldingDetailView(new Holding(holdingData));
+  var holdingDetailView = new HoldingDetailView(new Holding(holdingData), refreshCache, router);
   var userPortfolio = new Portfolio(data, Holding);
   var portfolioView = new PortfolioView(userPortfolio, HoldingView);
   var tableBox = ce('div');
@@ -25,6 +25,5 @@ module.exports = function (data, refreshCache, router) {
   var displayBox = ce('div');
   displayBox.classList.add("pure-u-12-24");
   displayBox.appendChild(holdingDetailView.render());
-  console.log(displayBox);
   container.appendChild(displayBox);
 }

@@ -18,12 +18,12 @@
 }
 
 .refresh-button {
-  float:right;
+  float: right;
   line-height: 65px;
   font-size: 2em;
   margin-right: 20px;
-  color:white;
-  cursor:pointer;
+  color: white;
+  cursor: pointer;
 }
 
 /*.logo-left {

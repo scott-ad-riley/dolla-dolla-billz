@@ -5,7 +5,7 @@ var LineChart = function(container, data, title, keyToUse){
   this.type = "line";
   this.handleData(data, keyToUse);
   this.container = container;
-  console.log("me!")
+
   new Highcharts.Chart({
     chart: {
       renderTo: this.container,

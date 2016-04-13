@@ -58,6 +58,45 @@ app.get('/api/portfolio/:epic', function (req, res) {
 })
 
 
+app.post('/api/portfolio/:epic', function (req, res) {
+  MongoClient.connect(url, function(err, db) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    var portfolio = db.collection('portfolio');
+    if (req.body.quantity === 0) {
+      portfolio.remove({"epic" : req.body.epic}, function () {
+        res.send('post completed');
+        res.status(200).end();
+        db.close(); 
+      });
+    } else {
+      portfolio.update(
+        {
+          "epic" : req.body.epic
+        },
+        {
+          "epic": req.body.epic,
+          "name": req.body.name,
+          "price": req.body.price,
+          "quantity": req.body.quantity,
+          "buyPrice": req.body.buyPrice,
+          "pastCloseOfDayPrices": req.body.pastCloseOfDayPrices,
+          "buyDate": req.body.buyDate
+        },
+        {
+          upsert: true
+        }, function () {
+          res.send('post completed');
+          res.status(200).end();
+          db.close(); 
+      });
+    }
+  });
+})
+
+
 app.post('/api/portfolio', function(req, res) {
   MongoClient.connect(url, function(err, db) {
     if(err) {

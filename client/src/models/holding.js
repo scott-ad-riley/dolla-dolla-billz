@@ -12,6 +12,23 @@ Holding.prototype.value = function () {
   return this.price * this.quantity;
 };
 
+Holding.prototype.sell = function (sellQuantity) {
+  this.quantity = this.quantity - sellQuantity;
+  if (this.quantity < 0) this.quantity = 0;
+}
+
+Holding.prototype.save = function (callback) {
+  var request = new XMLHttpRequest();
+  request.open("POST", "/api/portfolio/" + this.epic.toLowerCase());
+  request.setRequestHeader("Content-Type", "application/json");
+  request.onload = function () {
+    if (request.status === 200) {
+      if (callback) callback();
+    }
+  };
+  request.send(JSON.stringify(this));
+}
+
 Holding.prototype.change = function (distance) {
   var distance = distance || 1;
   var previousPrice = this.pastCloseOfDayPrices[(this.pastCloseOfDayPrices.length - (distance))];
