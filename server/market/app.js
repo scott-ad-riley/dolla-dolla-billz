@@ -2,13 +2,14 @@ var getHistData = require('./histData.js');
 var stockArray = [];
 var update3 = require('./update3.js');
 
+
+var updateMarket = function() {
+
 var runSave = function (stockArray) {
   if(stockArray.length === 346) {
   update3(stockArray);
   }
 };
-
-var updateMarket = function() {
 
 epics = ['3IN', 'AA', 'AAL', 'ABF', 'ACA', 'ADM', 'ADN', 'AGK', 'AGR', 'AHT', 'ALD', 'ALM', 'AMFW', 'ANTO', 'AO', 'ARM', 'ASHM', 'ASL', 'ATK', 'ATST', 'AUTO', 'AV', 'AVV', 'AZN', 'BA', 'BAB', 'BAG', 'BARC', 'BATS', 'BBA', 'BBOX', 'BBY', 'BDEV', 'BEZ', 'BGEO', 'BHMG', 'BKG', 'BLND', 'BLT', 'BME', 'BNZL', 'BOK', 'BOY', 'BP', 'BRBY', 'BRSN', 'BRW', 'BT', 'BTG', 'BVIC', 'BVS', 'BWNG', 'BWY', 'BYG', 'CAPC', 'CARD', 'CBG', 'CCC', 'CCH', 'CCL', 'CEY', 'CHOO', 'CINE', 'CIR', 'CKN', 'CLDN', 'CLI', 'CLLN', 'CNA', 'CNE', 'COB', 'CPG', 'CPI', 'CRDA', 'CRH', 'CRST', 'CWC', 'CWD', 'CWK', 'DC', 'DCC', 'DCG', 'DEB', 'DFS', 'DGE', 'DJAN', 'DLG', 'DLN', 'DNLM', 'DOM', 'DPH', 'DPLM', 'DRX', 'DTY', 'ECM', 'EDIN', 'ELM', 'ELTA', 'EMG', 'ERM', 'ESNT', 'ESUR', 'ETO', 'EVR', 'EXPN', 'EZJ', 'FCPT', 'FCSS', 'FDSA', 'FEV', 'FGP', 'FGT', 'FRCL', 'FRES', 'GCP', 'GFRD', 'GFS', 'GFTU', 'GKN', 'GLEN', 'GNC', 'GNK', 'GNS', 'GOG', 'GPOR', 'GRG', 'GRI', 'GSK', 'GSS', 'HAS', 'HFD', 'HGG', 'HICL', 'HIK', 'HL', 'HLMA', 'HMSF', 'HMSO', 'HOME', 'HSBA', 'HSTG', 'HSTN', 'HSV', 'HSX', 'HVPE', 'HWDN', 'IAG', 'IAP'];
 
@@ -92,7 +93,8 @@ request3.onload = function() {
   }
 };
 
-
 };
+
+updateMarket();
 
 module.exports = updateMarket;
