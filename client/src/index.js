@@ -61,14 +61,15 @@ router.route({
     DynamicPortfolio.makeEditable("Price");
     DynamicPortfolio.makeEditable("Value");
     DynamicPortfolio.makeEditable("Change");
+    navigation.renderRefreshButton(refreshCache);
     var tableBox = ce('div');
     tableBox.classList.add('pure-u-12-24');
     container.appendChild(DynamicPortfolio.render());
   }
 });
+var navigation = new Navigation(router.routes);
 
 window.onload = function () {
-  var navigation = new Navigation(router.routes);
   var header = gid('header');
   var container = gid('container');
 

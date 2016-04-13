@@ -3,7 +3,8 @@ require('short-dom')();
 var Navigation = function (app) {
   this.pages = app;
   this.onLinkClicked = null;
-  this.nav = ce('nav')
+  this.nav = ce('nav');
+  this.refreshButton = null;
 };
 
 Navigation.prototype.render = function () {
@@ -26,7 +27,24 @@ Navigation.prototype.render = function () {
   return this.nav;
 }
 
+Navigation.prototype.renderRefreshButton = function (handler) {
+  this.removeRefreshButton();
+  this.refreshButton = ce('div');
+  this.refreshButton.classList.add('refresh-button');
+  this.nav.appendChild(this.refreshButton)
+  this.refreshButton.innerHTML = "&#8634;";
+  this.refreshButton.onclick = handler;
+}
+
+Navigation.prototype.removeRefreshButton = function () {
+  if (this.refreshButton) {
+    this.nav.removeChild(this.refreshButton);
+    this.refreshButton = null;
+  }
+}
+
 Navigation.prototype.setActiveLink = function (path) {
+  this.removeRefreshButton();
   var pathVars = convertPathToArray(path);
   var pathToUse = (pathVars.length > 1) ? "/" + pathVars[0] : path;
   var links = this.nav.childNodes[0].childNodes;
