@@ -12,9 +12,13 @@ Holding.prototype.value = function () {
   return this.price * this.quantity;
 };
 
-Holding.prototype.sell = function (sellQuantity) {
-  this.quantity = this.quantity - sellQuantity;
+Holding.prototype.sell = function (quantity) {
+  this.quantity -= quantity;
   if (this.quantity < 0) this.quantity = 0;
+}
+
+Holding.prototype.buy = function (quantity) {
+  this.quantity += parseInt(quantity);
 }
 
 Holding.prototype.save = function (callback) {

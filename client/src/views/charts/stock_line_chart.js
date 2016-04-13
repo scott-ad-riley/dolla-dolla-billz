@@ -2,6 +2,7 @@ var Highcharts = require('highcharts');
 
 var LineChart = function(container, stock){
 
+  console.log(arguments)
   var title = stock.name;
   var type = "line";
   var arr = stock.pastCloseOfDayPrices;

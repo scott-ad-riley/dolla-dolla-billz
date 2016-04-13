@@ -5,34 +5,57 @@ var HoldingDetailView = function (holding, refreshCache, router) {
   this.holding = holding;
   this.refreshCache = refreshCache;
   this.router = router;
+  this.input = ce('input')
 }
 
 HoldingDetailView.prototype.render = function () {
   var box = ce('div');
   new LineChart(box, this.holding, this.holding.name, "pastCloseOfDayPrices");
   var details = ce('div');
-  var input = ce('input');
-  input.type = "number";
-  input.value = "0";
-  input.min = "0";
-  input.step = "10";
-  input.max = this.holding.quantity;
-  details.appendChild(input);
-  var button = ce('button');
-  button.innerText = "Sell";
-  button.onclick = function () {
-    this.holding.sell(input.value);
+  details.appendChild(this.renderForm())
+  box.appendChild(details);
+  return box;
+}
+
+HoldingDetailView.prototype.renderForm = function () {
+  var container = ce('div');
+  this.input.type = "number";
+  this.input.value = "0";
+  this.input.min = "0";
+  this.input.step = "10";
+  container.appendChild(this.input);
+  container.appendChild(this.renderSellButton());
+  container.appendChild(this.renderBuyButton());
+  return container
+}
+
+HoldingDetailView.prototype.renderSellButton = function () {
+  var sellButton = ce('button');
+  var maxShares = this.holding.quantity;
+  sellButton.innerText = "Sell";
+  sellButton.onclick = function () {
+    this.holding.sell(this.input.value);
     this.holding.save()
-    if (input.value === input.max) {
+    if (this.input.value === maxShares) {
       this.router.loadNewPage('/portfolio')
     } else {
       this.refreshCache()
     }
-    input.value = "0";
+    this.input.value = "0";
   }.bind(this)
-  details.appendChild(button);
-  box.appendChild(details);
-  return box;
+  return sellButton;
+}
+
+HoldingDetailView.prototype.renderBuyButton = function () {
+  var buyButton = ce('button');
+  buyButton.innerText = "Buy";
+  buyButton.onclick = function () {
+    this.holding.buy(this.input.value);
+    this.holding.save()
+    this.refreshCache()
+    this.input.value = "0";
+  }.bind(this)
+  return buyButton
 }
 
 module.exports = HoldingDetailView;
