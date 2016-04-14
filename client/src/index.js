@@ -3,6 +3,7 @@ var Router = require('./utils/router.js');
 var Navigation = require('./views/navigation.js');
 // Page Views
 var renderPortfolioPage = require('./views/pages/portfolio_page.js');
+var renderAboutPage = require('./views/pages/about_view.js');
 var renderHoldingPage = require('./views/pages/holding_page.js');
 var renderMarketPage = require('./views/pages/market_page.js');
 var renderStockPage = require('./views/pages/stock_page.js');
@@ -40,7 +41,7 @@ router.route({
   path: "/about",
   heading: "About Us",
   onLoad: function () {
-    container.innerHTML = "This is the about page";
+    renderAboutPage();
   }
 });
 
