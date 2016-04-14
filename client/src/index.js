@@ -8,13 +8,14 @@ var Holding = require('./models/holding.js');
 var PortfolioView = require('./views/portfolio_view.js');
 var HoldingView = require('./views/holding_view.js');
 // Chart Views
-var LineChart = require('./views/charts/portfolio_line_chart.js');
-var PieChart = require('./views/charts/portfolio_pie_chart.js');
-var StockLineChart = require('./views/charts/stock_line_chart.js');
+// var LineChart = require('./views/charts/portfolio_line_chart.js');
+// var PieChart = require('./views/charts/portfolio_pie_chart.js');
+// var StockLineChart = require('./views/charts/stock_line_chart.js');
 // Page Views
 var renderPortfolioPage = require('./views/pages/portfolio_page.js');
 var renderHoldingPage = require('./views/pages/holding_page.js');
 var renderMarketPage = require('./views/pages/market_page.js');
+var renderStockPage = require('./views/pages/stock_page.js');
 // User Query Views
 var DynamicHoldingView = require('./views/queries/dynamic_holding_view.js')
 
@@ -37,9 +38,13 @@ router.route({
   path: "/market",
   heading: "The Market",
   dataPath: "/api/market",
-  onLoad: function (data, refreshCache) {
-    renderMarketPage(data, refreshCache);
-  }
+  onLoad: renderMarketPage
+});
+
+router.route({
+  path: "/market/:epic",
+  dataPath: "/api/market",
+  onLoad: renderStockPage
 });
 
 router.route({
@@ -68,7 +73,7 @@ router.route({
   }
 });
 var navigation = new Navigation(router.routes);
-
+router.navigation = navigation;
 window.onload = function () {
   var header = gid('header');
   var container = gid('container');

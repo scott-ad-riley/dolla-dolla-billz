@@ -20,6 +20,9 @@ var LineChart = function(container, stock){
     series: data,
     xAxis: {categories: ['1','2','3','4','5','6','7'] },
     yAxis: {
+      title: {
+        text: "Something"
+      },
       labels: {
         align: 'left',
         x: 0,

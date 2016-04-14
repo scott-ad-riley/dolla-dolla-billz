@@ -15,8 +15,16 @@ var LineChart = function(container, data, title, keyToUse){
       text: this.title,
     },
     series: this.data,
-    xAxis: { categories: ['7','6','5','4','3','2','1'] },
+    xAxis: { 
+      categories: ['7','6','5','4','3','2','1'],
+      title: {
+        text: "Past Close of Day Prices"
+      }
+    },
     yAxis: {
+      title: {
+        text: "Price (p)"
+      },
       labels: {
         align: 'left',
         x: 0,
@@ -33,13 +41,13 @@ LineChart.prototype.handleData = function (data, keyToUse){
     this.data = data.map(function (holding) {
       return {
           name: holding[i].name,
-          data: holding[i][keyToUse] 
+          data: holding[i][keyToUse].map(Number)
         }
     });
   } else {
     this.data = [{
               name: data.name,
-              data: data[keyToUse] 
+              data: data[keyToUse].map(Number)
             }];
   }
 

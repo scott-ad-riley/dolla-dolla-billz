@@ -1,5 +1,5 @@
 require('short-dom')();
-var LineChart = require('./charts/portfolio_line_chart.js');
+var LineChart = require('./charts/line_chart.js');
 
 var HoldingDetailView = function (holding, refreshCache, router) {
   this.holding = holding;

@@ -22,6 +22,10 @@ app.get("/portfolio/:page", function (req, res) {
   res.sendFile(path.join(__dirname + '/../client/build/index.html'));
 });
 
+app.get("/market/:page", function (req, res) {
+  res.sendFile(path.join(__dirname + '/../client/build/index.html'));
+});
+
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
@@ -104,19 +108,26 @@ app.post('/api/portfolio', function(req, res) {
       return;
     }
     var portfolio = db.collection('portfolio');
-    portfolio.insert({
+    portfolio.update({
+      "epic": req.body.epic
+    },
+    {
       "name": req.body.name,
       "epic": req.body.epic,
       "price": req.body.price,
       "quantity": req.body.quantity,
-      "buyPrice": req.body.buyPrice,
+      "buyPrice": req.body.price,
       "pastCloseOfDayPrices": req.body.pastCloseOfDayPrices,
       "buyDate": req.body.buyDate
+    },
+    {
+      upsert: true
+    }, function () {
+      res.send('post completed');
+      res.status(200).end();
+      db.close();
     });
   });
-  res.send('post completed');
-  res.status(200).end();
-  db.close(); 
 });
 
 app.get("/api/market", function (req, res) {

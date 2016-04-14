@@ -1,4 +1,4 @@
-var camelCase = require('../utils/strip_heading.js');
+var camelCase = require('../../utils/strip_heading.js');
 var TableRow = function (holdingObj, fields) {
   this.data = holdingObj;
   this.fields = fields;

@@ -1,33 +1,26 @@
 require('short-dom')();
-var formatPercent = require("./percent_change_view.js");
-var getParentNodeOfType = require('../utils/get_parent_node_of_type.js')
-var HoldingView = require('./holding_view.js');
+var formatPercent = require("../percent_change_view.js");
+var getParentNodeOfType = require('../../utils/get_parent_node_of_type.js')
 var defaultFields = [
+  { heading:"Name" },
   { heading:"Epic" },
-  { heading:"Quantity" },
   { heading:"Price (p)",
-    value: function (holding) {
+    value: function (stock) {
       var span = ce('span');
-      span.innerText = Math.round(holding.price);
+      span.innerText = Math.round(stock.price);
       return span;
     }
    },
-  {
-    heading:"Value",
-    value: function (holding) {
-      var span = ce('span');
-      span.innerText = "£" + (holding.value() / 100).toFixed(2);
-      return span;
-    }
-  },
+  { heading:"Year High" },
+  { heading:"Year Low" },
   {
     heading:"Change",
     value: formatPercent
   }
 ];
 
-var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
-  this.data = portfolioObj.holdings;
+var MarketView = function (marketObj, RowConstructor, headings) {
+  this.data = marketObj.stocks;
   this.fields = headings || defaultFields;
   this.tableEl = ce('table')
   this.render = function () {
@@ -38,9 +31,9 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
     this.tableEl.appendChild(this.renderHeader());
     var tableBody = ce('tbody');
     this.tableEl.appendChild(tableBody);
-    this.data.forEach(function (holding) {
-      var holdingView = new HoldingViewConstructor(holding, this.fields);
-      tableBody.appendChild(holdingView.render());
+    this.data.forEach(function (data) {
+      var rowView = new RowConstructor(data, this.fields);
+      tableBody.appendChild(rowView.render());
     }.bind(this));
     return this.tableEl;
   }
@@ -57,13 +50,13 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
     return tableHeadCont;
   }
 
-  this.makeEditable = function (requestedHeading) {
-    var removeKeys = /\(.+/g;
-    var heading = this.fields.find(function (field) {
-      return field.heading.replace(removeKeys, "").trim() === requestedHeading;
-    })
-    heading.isEditable = true;
-  }
+  // this.makeEditable = function (requestedHeading) {
+  //   var removeKeys = /\(.+/g;
+  //   var heading = this.fields.find(function (field) {
+  //     return field.heading.replace(removeKeys, "").trim() === requestedHeading;
+  //   })
+  //   heading.isEditable = true;
+  // }
 
   this.addRowClick = function (callback) {
     this.tableEl.childNodes[1].onclick = function (e) {
@@ -74,4 +67,4 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   }
 }
 
-module.exports = PortfolioView;
+module.exports = MarketView;
