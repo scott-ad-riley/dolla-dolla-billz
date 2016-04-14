@@ -25,7 +25,6 @@ var defaultFields = [
   }
 ];
 
-
 var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   this.data = portfolioObj.holdings;
   this.fields = headings || defaultFields;
