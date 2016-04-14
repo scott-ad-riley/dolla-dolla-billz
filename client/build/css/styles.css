@@ -17,6 +17,10 @@
   color: red;
 }
 
+.go-right {
+  float:right;
+}
+
 .refresh-button {
   float: right;
   line-height: 65px;
@@ -93,16 +97,6 @@ nav .link:hover {
 
 nav .link:hover a {
   border-color: #BBDEFB !important; /* need to overwrite the js style */
-}
-
-#portfolio-table {
-    border-collapse: collapse;
-}
-
-#portfolio-table th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: left;
 }
 
 tr:hover{

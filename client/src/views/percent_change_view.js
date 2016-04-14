@@ -1,7 +1,8 @@
 require('short-dom')();
-var formatPercentChange = function (holding) {
+var formatPercentChange = function (model) {
   var span = ce('span');
-  var percentChange = holding.change();
+  var percentChange = model.change();
+
   if (percentChange > 0) {
     span.innerHTML = "&#x25B2;" + percentChange + "%"; // Gives me the ▲ character
     span.classList.add('green');

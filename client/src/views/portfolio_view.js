@@ -8,7 +8,7 @@ var defaultFields = [
   { heading:"Price (p)",
     value: function (holding) {
       var span = ce('span');
-      span.innerText = Math.round(holding.price); // thanks stackoverflow
+      span.innerText = Math.round(holding.price);
       return span;
     }
    },
@@ -32,7 +32,6 @@ var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   this.tableEl = ce('table')
   this.render = function () {
     this.tableEl.style.tableLayout = "fixed";
-    this.tableEl.id = "portfolio-table";
     this.tableEl.style.width = "100%";
     this.tableEl.classList.add('pure-table');
     this.tableEl.classList.add('pure-table-horizontal');
