@@ -1,4 +1,3 @@
-var StockLineChart = require('../charts/stock_line_chart.js');
 var Stock = require('../../models/stock.js');
 var Market = require('../../models/market.js');
 var MarketTable = require('../tables/market_view.js');

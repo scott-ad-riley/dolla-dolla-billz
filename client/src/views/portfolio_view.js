@@ -1,7 +1,6 @@
 require('short-dom')();
 var formatPercent = require("./percent_change_view.js");
 var getParentNodeOfType = require('../utils/get_parent_node_of_type.js')
-var HoldingView = require('./holding_view.js');
 var defaultFields = [
   { heading:"Epic" },
   { heading:"Quantity" },
