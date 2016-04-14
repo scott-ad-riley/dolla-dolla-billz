@@ -13,6 +13,7 @@ var PieChart = require('./views/charts/portfolio_pie_chart.js');
 var StockLineChart = require('./views/charts/stock_line_chart.js');
 // Page Views
 var renderPortfolioPage = require('./views/pages/portfolio_page.js');
+var renderAboutPage = require('./views/pages/about_view.js');
 var renderHoldingPage = require('./views/pages/holding_page.js');
 var renderMarketPage = require('./views/pages/market_page.js');
 // User Query Views
@@ -46,7 +47,7 @@ router.route({
   path: "/about",
   heading: "About Us",
   onLoad: function () {
-    container.innerHTML = "This is the about page";
+    renderAboutPage();
   }
 });
 
