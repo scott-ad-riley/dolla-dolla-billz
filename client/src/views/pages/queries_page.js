@@ -2,12 +2,12 @@
 var Portfolio = require('../../models/portfolio.js');
 var Holding = require('../../models/holding.js');
 // Views
-var PortfolioView = require('../portfolio_view.js');
+var DynamicTable = require('../portfolio_view.js');
 var DynamicHoldingView = require('../queries/dynamic_holding_view.js');
 
 module.exports = function (data, refreshCache, router) {
   container.innerHTML = "";
-  var DynamicPortfolio = new PortfolioView(new Portfolio(data, Holding), DynamicHoldingView);
+  var DynamicPortfolio = new DynamicTable(new Portfolio(data, Holding), DynamicHoldingView);
   DynamicPortfolio.makeEditable("Quantity");
   DynamicPortfolio.makeEditable("Price");
   DynamicPortfolio.makeEditable("Value");
