@@ -1,14 +1,15 @@
 var Stock = require('../../models/stock.js');
 var Market = require('../../models/market.js');
-var MarketTable = require('../tables/market_view.js');
+var TableView = require('../tables/table_view.js');
 var TableRowView = require('../tables/row.js');
+var marketTableFields = require('../tables/market_fields.js');
 var List = require('list.js');
 
 var renderMarketPage = function(data, refreshCache, router) {
   var theMarket = new Market(data, Stock);
   container.innerHTML = "";
 
-  var marketView = new MarketTable(theMarket, TableRowView);
+  var marketView = new TableView(theMarket.stocks, TableRowView, 'market-table', marketTableFields, 1);
   var paddingBox = ce('div');
   paddingBox.classList.add('pure-u-1-5');
   container.appendChild(paddingBox);

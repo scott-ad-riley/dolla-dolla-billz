@@ -1,29 +1,6 @@
 require('short-dom')();
 var formatPercent = require("./percent_change_view.js");
 var getParentNodeOfType = require('../utils/get_parent_node_of_type.js')
-var defaultFields = [
-  { heading:"Epic" },
-  { heading:"Quantity" },
-  { heading:"Price (p)",
-    value: function (holding) {
-      var span = ce('span');
-      span.innerText = Math.round(holding.price);
-      return span;
-    }
-   },
-  {
-    heading:"Value",
-    value: function (holding) {
-      var span = ce('span');
-      span.innerText = "£" + (holding.value() / 100).toFixed(2);
-      return span;
-    }
-  },
-  {
-    heading:"Change",
-    value: formatPercent
-  }
-];
 
 var PortfolioView = function (portfolioObj, HoldingViewConstructor, headings) {
   this.data = portfolioObj.holdings;

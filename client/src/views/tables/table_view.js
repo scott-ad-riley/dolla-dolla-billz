@@ -1,34 +1,19 @@
 require('short-dom')();
 var formatPercent = require("../percent_change_view.js");
 var getParentNodeOfType = require('../../utils/get_parent_node_of_type.js')
-var defaultFields = [
-  { heading:"Name" },
-  { heading:"Epic" },
-  { heading:"Price (p)",
-    value: function (stock) {
-      var span = ce('span');
-      span.innerText = Math.round(stock.price);
-      return span;
-    }
-   },
-  { heading:"Year High" },
-  { heading:"Year Low" },
-  {
-    heading:"Change",
-    value: formatPercent
-  }
-];
 
-var MarketView = function (marketObj, RowConstructor, headings) {
-  this.data = marketObj.stocks;
-  this.fields = headings || defaultFields;
+var MarketView = function (collection, RowConstructor, containerID, headings, epicPosition) {
+  this.data = collection;
+  this.fields = headings;
   this.tableEl = ce('table')
   this.filterBox = ce('input');
+  this.epicPosition = epicPosition;
+  this.containerID = containerID
   this.render = function () {
     var tableBox = ce('div');
     tableBox.style.width = "100%";
     tableBox.appendChild(this.tableEl);
-    tableBox.id = "market-table";
+    tableBox.id = this.containerID;
     tableBox.appendChild(this.renderSearch());
     this.tableEl.style.tableLayout = "fixed";
     this.tableEl.style.width = "100%";
@@ -68,7 +53,7 @@ var MarketView = function (marketObj, RowConstructor, headings) {
   this.addRowClick = function (callback) {
     this.tableEl.childNodes[1].onclick = function (e) {
       var tableRow = getParentNodeOfType(e.target, "tr");
-      var clickedStockEpic = tableRow.childNodes[1].innerText;
+      var clickedStockEpic = tableRow.childNodes[this.epicPosition].innerText;
       callback(clickedStockEpic.toLowerCase())
     }.bind(this);
   }
