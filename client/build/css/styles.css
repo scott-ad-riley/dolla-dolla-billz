@@ -17,6 +17,10 @@
   color: red;
 }
 
+.go-right {
+  float:right;
+}
+
 .refresh-button {
   float: right;
   line-height: 65px;

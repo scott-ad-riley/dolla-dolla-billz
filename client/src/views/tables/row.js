@@ -7,6 +7,7 @@ var TableRow = function (holdingObj, fields) {
     var tr = document.createElement('tr');
     this.fields.forEach(function (field) {
       var td = document.createElement("td");
+      td.classList.add(camelCase(field.heading.toLowerCase()))
       if (typeof field.value === "function") {
         td.appendChild(field.value(this.data));
       } else {

@@ -23,19 +23,27 @@ var MarketView = function (marketObj, RowConstructor, headings) {
   this.data = marketObj.stocks;
   this.fields = headings || defaultFields;
   this.tableEl = ce('table')
+  this.filterBox = ce('input');
   this.render = function () {
+    var tableBox = ce('div');
+    tableBox.style.width = "100%";
+    tableBox.appendChild(this.tableEl);
+    tableBox.id = "market-table";
+    tableBox.appendChild(this.renderSearch());
     this.tableEl.style.tableLayout = "fixed";
     this.tableEl.style.width = "100%";
     this.tableEl.classList.add('pure-table');
     this.tableEl.classList.add('pure-table-horizontal');
     this.tableEl.appendChild(this.renderHeader());
     var tableBody = ce('tbody');
+    tableBody.classList.add('list');
     this.tableEl.appendChild(tableBody);
     this.data.forEach(function (data) {
       var rowView = new RowConstructor(data, this.fields);
       tableBody.appendChild(rowView.render());
     }.bind(this));
-    return this.tableEl;
+    tableBox.appendChild(this.tableEl);
+    return tableBox;
   }
 
   this.renderHeader = function () {
@@ -50,21 +58,21 @@ var MarketView = function (marketObj, RowConstructor, headings) {
     return tableHeadCont;
   }
 
-  // this.makeEditable = function (requestedHeading) {
-  //   var removeKeys = /\(.+/g;
-  //   var heading = this.fields.find(function (field) {
-  //     return field.heading.replace(removeKeys, "").trim() === requestedHeading;
-  //   })
-  //   heading.isEditable = true;
-  // }
+  this.renderSearch = function () {
+    var input = ce('input');
+    input.classList.add('search');
+    input.classList.add('go-right');
+    return input;
+  }
 
   this.addRowClick = function (callback) {
     this.tableEl.childNodes[1].onclick = function (e) {
-      var elementToUse = getParentNodeOfType(e.target, "tr");
-      var position = Array.prototype.indexOf.call(this.tableEl.childNodes[1].childNodes, elementToUse);
-      callback(this.data[position].epic.toLowerCase())
+      var tableRow = getParentNodeOfType(e.target, "tr");
+      var clickedStockEpic = tableRow.childNodes[1].innerText;
+      callback(clickedStockEpic.toLowerCase())
     }.bind(this);
   }
+
 }
 
 module.exports = MarketView;

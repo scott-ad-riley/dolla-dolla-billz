@@ -22,10 +22,15 @@ module.exports = function (data, refreshCache, router) {
     router.loadNewPage("/market/" + epic);
   });
   container.appendChild(tableBox);
+  var listOptions = {
+    valueNames: [ 'epic', 'name' ]
+  };
+  var marketList = new List('market-table', listOptions);
 
   var stockDetailView = new StockDetailView(new Stock(stock), refreshCache, router, router.navigation);
   var displayBox = ce('div');
   displayBox.classList.add("pure-u-12-24");
   displayBox.appendChild(stockDetailView.render());
   container.appendChild(displayBox);
+
 }
