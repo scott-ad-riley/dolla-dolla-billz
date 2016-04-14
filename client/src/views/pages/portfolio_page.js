@@ -2,12 +2,12 @@ require('short-dom')();
 var Portfolio = require('../../models/portfolio.js');
 var Holding = require('../../models/holding.js');
 var PortfolioView = require('../portfolio_view.js');
-var HoldingView = require('../holding_view.js');
+var TableRowView = require('../tables/row.js');
 
 module.exports = function (data, refreshCache, router) {
   var userPortfolio = new Portfolio(data, Holding);
   container.innerHTML = "";
-  var portfolioView = new PortfolioView(userPortfolio, HoldingView);
+  var portfolioView = new PortfolioView(userPortfolio, TableRowView);
   var foo = ce('div');
   foo.classList.add('pure-u-1-5');
   container.appendChild(foo);
