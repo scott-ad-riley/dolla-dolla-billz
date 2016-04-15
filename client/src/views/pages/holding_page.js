@@ -10,7 +10,6 @@ var portfolioTableFields = require('../tables/portfolio_fields.js');
 module.exports = function (data, refreshCache, router) {
   container.innerHTML = "";
   var epic = router.currentPath.split("/").last();
-  console.log(epic);
   var holdingData = data.find(function (holdingData) {
     return holdingData.epic === epic.toUpperCase();
   });
