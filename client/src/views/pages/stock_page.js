@@ -5,6 +5,7 @@ var Market = require('../../models/market.js');
 var StockDetailView = require('../stock_detail_view');
 var TableView = require('../tables/table_view.js');
 var TableRowView = require('../tables/row.js');
+var marketTableColumns = require('../tables/market_fields.js');
 // var HoldingDetailView = require('../holding_detail_view.js')
 
 module.exports = function (data, refreshCache, router) {
@@ -14,7 +15,7 @@ module.exports = function (data, refreshCache, router) {
     return stockData.epic === epic.toUpperCase();
   });
   var market = new Market(data, Stock);
-  var marketView = new TableView(market.stocks, TableRowView, 'market-table');
+  var marketView = new TableView(market.stocks, TableRowView, 'market-table', marketTableColumns, 1);
   var tableBox = ce('div');
   tableBox.classList.add("pure-u-12-24");
   tableBox.appendChild(marketView.render());
